@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React, { useState } from "react";
 import * as faIcons from "react-icons/fa";
 import * as aiIcons from "react-icons/ai";
@@ -8,6 +9,10 @@ import { LeftBar } from "./LeftMenu/LeftBar";
 import { IconContext } from "react-icons";
 
 function Navbar() {
+  {
+    /* Using state to configure when to open and close the pop out menu.
+       Function below to trigger state change. */
+  }
   const [rightbar, setRightbar] = useState(false);
   const [leftbar, setLeftbar] = useState(false);
 
@@ -17,6 +22,7 @@ function Navbar() {
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
+        {/* Creating Navbar div with two Icons */}
         <div className="navbar">
           <Link to="#" className="menu-bars-left">
             <faIcons.FaCompass onClick={showLeftbar} />
@@ -25,6 +31,10 @@ function Navbar() {
             <faIcons.FaBars onClick={showRightbar} />
           </Link>
         </div>
+        {/* Setting left menu bar pop out functionality. 
+            First in ul class is the x icon which also triggers the state change.
+            Next imports the menu list from the LeftBar.js and displaces it with the item.path link that can be passed onto the router in the App.js
+            App.js catches the link and switches it to the path pages. */}
         <nav className={leftbar ? "nav-menu-left active" : "nav-menu-left"}>
           <ul className="nav-menu-items" onClick={showLeftbar}>
             <li className="navbar-toggle">
@@ -44,6 +54,7 @@ function Navbar() {
             })}
           </ul>
         </nav>
+        {/* Same action as the left menu above but with right menu */}
         <nav className={rightbar ? "nav-menu-right active" : "nav-menu-right"}>
           <ul className="nav-menu-items" onClick={showRightbar}>
             <li className="navbar-toggle">
