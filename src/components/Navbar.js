@@ -5,13 +5,12 @@ import * as aiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { RightBar } from "./RightMenu/RightBar";
-import { LeftBar } from "./LeftMenu/LeftBar";
+import LeftBar from "./LeftMenu/LeftBar";
 import { IconContext } from "react-icons";
 
 function Navbar() {
   {
-    /* Using state to configure when to open and close the pop out menu.
-       Function below to trigger state change. */
+    /* Using state to configure when to open and close the pop out menu. Function below to trigger state change. */
   }
   const [rightbar, setRightbar] = useState(false);
   const [leftbar, setLeftbar] = useState(false);
@@ -42,19 +41,13 @@ function Navbar() {
                 <aiIcons.AiOutlineClose />
               </Link>
             </li>
-            {LeftBar.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
+            <LeftBar />
           </ul>
         </nav>
-        {/* Same action as the left menu above but with right menu */}
+        {/* Setting right menu bar pop out functionality. 
+            First in ul class is the x icon which also triggers the state change.
+            Next imports the menu list from the RightBar.js and displaces it with the item.path link that can be passed onto the router in the App.js
+            App.js catches the link and switches it to the path pages. */}
         <nav className={rightbar ? "nav-menu-right active" : "nav-menu-right"}>
           <ul className="nav-menu-items" onClick={showRightbar}>
             <li className="navbar-toggle">

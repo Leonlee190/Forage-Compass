@@ -1,23 +1,25 @@
-import React from "react";
-import * as mdIcons from "react-icons/md";
+import React, { useState } from "react";
+import { LeftBarData } from "./LeftBarData";
 
-export const LeftBar = [
-  {
-    title: "Add stuff",
-    path: "/requests",
-    icon: <mdIcons.MdPlaylistAdd />,
-    cName: "nav-text",
-  },
-  {
-    title: "Choose stuff",
-    path: "/reports",
-    icon: <mdIcons.MdReport />,
-    cName: "nav-text",
-  },
-  {
-    title: "Doink stuff",
-    path: "/contacts",
-    icon: <mdIcons.MdPermContactCalendar />,
-    cName: "nav-text",
-  },
-];
+function LeftBar() {
+  const [subnav, setSubnav] = useState(false);
+
+  const showSubnav = () => setSubnav(!subnav);
+
+  return (
+    <>
+      <div className="left-menu">
+        {LeftBarData.map((item, index) => {
+          return (
+            <li key={index} className={item.cName}>
+              {item.icon}
+              <span>{item.title}</span>
+            </li>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+export default LeftBar;
