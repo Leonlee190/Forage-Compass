@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Requests from "./pages/Requests";
 import Reports from "./pages/Reports";
 import Contacts from "./pages/Contacts";
+import { MapContainer } from "./components/map/map";
 
 function App() {
   return (
@@ -21,8 +22,8 @@ function App() {
           </Route>
         </Switch>
       </Router>
-
       {/* Create a component javascript file for google map and add it here. */}
+      <MapContainer />
     </div>
   );
 }
