@@ -14,12 +14,15 @@ export const LeftBarData = [
     subNav: [
       {
         title: "Blueberry",
+        cName: "sub-nav-text",
       },
       {
         title: "Blackberry",
+        cName: "sub-nav-text",
       },
       {
         title: "Marionberry",
+        cName: "sub-nav-text",
       },
     ],
   },
@@ -33,12 +36,15 @@ export const LeftBarData = [
     subNav: [
       {
         title: "Chantrelle Mushroom",
+        cName: "sub-nav-text",
       },
       {
         title: "Porcini Mushroom",
+        cName: "sub-nav-text",
       },
       {
         title: "Oyster Mushroom",
+        cName: "sub-nav-text",
       },
     ],
   },
@@ -48,5 +54,6 @@ export const LeftBarData = [
     cName: "nav-text",
     iconClosed: <riIcons.RiArrowDownSFill />,
     iconOpened: <riIcons.RiArrowUpSFill />,
+    subNav: [],
   },
 ];

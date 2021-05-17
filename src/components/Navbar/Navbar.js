@@ -35,9 +35,9 @@ function Navbar() {
             Next imports the menu list from the LeftBar.js and displaces it with the item.path link that can be passed onto the router in the App.js
             App.js catches the link and switches it to the path pages. */}
         <nav className={leftbar ? "nav-menu-left active" : "nav-menu-left"}>
-          <ul className="nav-menu-items" onClick={showLeftbar}>
+          <ul className="nav-menu-items">
             <li className="navbar-toggle">
-              <Link to="#" className="menu-bars">
+              <Link to="#" className="menu-bars" onClick={showLeftbar}>
                 <aiIcons.AiOutlineClose />
               </Link>
             </li>
