@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { LeftBarData } from "./LeftBarData";
 import "./LeftBar.css";
+import { Link } from "react-router-dom";
 
 function LeftBar() {
-  const [subnav, setSubnav] = useState({});
+  const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);
 
@@ -29,9 +30,11 @@ function LeftBar() {
           return (
             <ul>
               <li key={index} className={item.cName}>
-                {item.icon}
-                <span>{item.title}</span>
-                <span className="expand-icon">{item.iconClosed}</span>
+                <Link to="#" className="menuSelect" onClick={showSubnav}>
+                  {item.icon}
+                  <span>{item.title}</span>
+                  <span className="expand-icon">{item.iconClosed}</span>
+                </Link>
               </li>
               <li>{hasSubNav && subNavJSX}</li>
             </ul>
