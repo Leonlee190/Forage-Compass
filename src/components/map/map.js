@@ -4,6 +4,10 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./map.css"; // minor styling here
 import CurrentLocation from "./location"; // centers map @ curr loc
 import { ListoMarkers } from "./playMarkerData";
+import blackberry from "./icons/blackberry-7-32.png";
+import raspberry from "./icons/raspberry-1-32.png";
+import mushroom from "./icons/mushroom-32.png";
+import apple from "./icons/apple-114-32.png";
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -74,7 +78,13 @@ export class MapContainer extends Component {
           {/* this is where the info for infowindow is displayed...
             can later put in, ratings, size, picture?  whatever */}
           <div>
+            <img
+              src={this.state.selectedPlace.icon}
+              alt=""
+              style={{ height: "32px", width: "32px" }}
+            />
             <h4>{this.state.selectedPlace.name}</h4>
+            <h4>Am I doing this right?...</h4>
           </div>
         </InfoWindow>
       </CurrentLocation>
