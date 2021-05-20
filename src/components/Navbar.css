@@ -61,6 +61,7 @@
 }
 
 .nav-text {
+  color: white; /* added in to see da things, can remove later*/
   display: flex;
   justify-content: start;
   align-items: center;
