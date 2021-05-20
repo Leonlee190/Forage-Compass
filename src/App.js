@@ -20,10 +20,12 @@ function App() {
           <Route path="/contacts">
             <Contacts />
           </Route>
+          <Route path="/">
+            {/* the actual map component, centers around your location. */}
+            <MapContainer />
+          </Route>
         </Switch>
       </Router>
-      {/* Create a component javascript file for google map and add it here. */}
-      <MapContainer />
     </div>
   );
 }

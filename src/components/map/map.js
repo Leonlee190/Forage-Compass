@@ -3,14 +3,25 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./map.css"; // minor styling here
 import CurrentLocation from "./location"; // centers map @ curr loc
+import { ListoMarkers } from "./playMarkerData";
 
 export class MapContainer extends Component {
-  state = {
-    // this is all stuff from google-react tutorial
-    showingInfoWindow: false, // hides/shows infoWindow
-    activeMarker: {}, // shows marker on click
-    selectedPlace: {}, // shows info window to selected marker
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      // this is all stuff from google-react tutorial
+      showingInfoWindow: false, // hides/shows infoWindow
+      activeMarker: {}, // shows marker on click
+      selectedPlace: {}, // shows info window to selected marker
+      markerObjects: [],
+    };
+
+    this.onMarkerMounted = (element) => {
+      this.setState((prevState) => ({
+        markerObjects: [...prevState.markerObjects, element.marker],
+      }));
+    };
+  }
 
   // sets active marker as this one, props as the location of the marker
   // I think? .. and switches the state of the infowindow on/off
@@ -32,9 +43,26 @@ export class MapContainer extends Component {
   };
 
   render() {
+    // const google = this.props.google;
     return (
       // current location tries to get your location and then centers the map around it.  storred in map/location.js
-      <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
+      <CurrentLocation
+        centerAroundCurrentLocation
+        google={this.props.google}
+        onClick={this.mapClicked}
+      >
+        {ListoMarkers.map((item) => (
+          <Marker
+            // key={item.id}
+            title={item.name}
+            name={item.name}
+            position={{ lat: item.lat, lng: item.lng }}
+            onClick={this.onMarkerClick}
+            icon={{
+              url: item.icon,
+            }}
+          />
+        ))}
         {/*This I think just puts a single marker in the center of screen, for testing/from tutorial*/}
         <Marker onClick={this.onMarkerClick} name={"Current Location"} />
         {/* this is where we put the info window */}
