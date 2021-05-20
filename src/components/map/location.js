@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./map.css";
 
-// not sure how to move this to css yet... about there.
+// don't think I can take this out and put in css file
 // connected to render portion as well.
 const mapStyles = {
   map: {
@@ -68,7 +68,7 @@ export class CurrentLocation extends React.Component {
         });
       }
     }
-    this.loadMap(); //<^> // I don't know about this <^> part?...
+    this.loadMap();
   }
 
   // grabs reference to DOM and see's where you want your map placed
@@ -76,7 +76,7 @@ export class CurrentLocation extends React.Component {
     if (this.props && this.props.google) {
       // checks is google available
       const { google } = this.props;
-      const maps = google.maps;
+      const gmaps = google.maps;
 
       // refs is deprecated, dunno what to do here... tutorial.
       const mapRef = this.refs.map;
@@ -86,19 +86,20 @@ export class CurrentLocation extends React.Component {
 
       let { zoom } = this.props;
       const { lat, lng } = this.state.currentLocation;
-      const center = new maps.LatLng(lat, lng);
+      const center = new gmaps.LatLng(lat, lng);
 
       const mapConfig = Object.assign(
         {},
         {
           center: center,
           zoom: zoom,
+          // this removes the funny buttons stuff, leaves only map.
           disableDefaultUI: true,
         }
       );
 
       // maps.Map() is constructor that makes the map
-      this.map = new maps.Map(node, mapConfig);
+      this.map = new gmaps.Map(node, mapConfig);
     }
   }
 
