@@ -4,11 +4,6 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./map.css"; // minor styling here
 import CurrentLocation from "./location"; // centers map @ curr loc
 import { ListoMarkers } from "./playMarkerData";
-import blackberry from "./icons/blackberry-7-32.png";
-import raspberry from "./icons/raspberry-1-32.png";
-import mushroom from "./icons/mushroom-32.png";
-import apple from "./icons/apple-114-32.png";
-
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +13,12 @@ export class MapContainer extends Component {
       activeMarker: {}, // shows marker on click
       selectedPlace: {}, // shows info window to selected marker
       markerObjects: [],
+      mapTypeControl: true,
+      // mapTypeControlOptions: {
+      //   mapTypeIds: [
+      //     google.maps.MapTypeId.ROADMAP,
+      //   ]
+      // }
     };
 
     this.onMarkerMounted = (element) => {
@@ -58,17 +59,18 @@ export class MapContainer extends Component {
         {ListoMarkers.map((item) => (
           <Marker
             // key={item.id}
-            title={item.name}
+            title={item.name} // title I think is the mouseover?
             name={item.name}
+            src={item.src} // passes image src to marker src property!
             position={{ lat: item.lat, lng: item.lng }}
             onClick={this.onMarkerClick}
             icon={{
-              url: item.icon,
+              url: item.src,
             }}
           />
         ))}
         {/*This I think just puts a single marker in the center of screen, for testing/from tutorial*/}
-        <Marker onClick={this.onMarkerClick} name={"Current Location"} />
+        {/* <Marker onClick={this.onMarkerClick} name={"Current Location"} /> */}
         {/* this is where we put the info window */}
         <InfoWindow
           marker={this.state.activeMarker}
@@ -79,7 +81,7 @@ export class MapContainer extends Component {
             can later put in, ratings, size, picture?  whatever */}
           <div>
             <img
-              src={this.state.selectedPlace.icon}
+              src={this.state.selectedPlace.src}
               alt=""
               style={{ height: "32px", width: "32px" }}
             />

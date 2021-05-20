@@ -10,6 +10,7 @@ const mapStyles = {
     position: "absolute",
     width: "100%",
     height: "100%",
+    top: "0px",
   },
 };
 
@@ -92,6 +93,7 @@ export class CurrentLocation extends React.Component {
         {
           center: center,
           zoom: zoom,
+          disableDefaultUI: true,
         }
       );
 
