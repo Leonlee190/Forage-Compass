@@ -1,91 +1,176 @@
 // https://www.digitalocean.com/community/tutorials/how-to-integrate-the-google-maps-api-into-react-applications
-import React, { Component } from "react";
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import "./map.css"; // minor styling here
-import CurrentLocation from "./location"; // centers map @ curr loc
-import { ListoMarkers } from "./playMarkerData";
-export class MapContainer extends Component {
+import { Marker } from "google-maps-react";
+import React from "react";
+import ReactDOM from "react-dom";
+import "./map.css";
+
+// don't think I can take this out and put in css file
+// connected to render portion as well.
+const mapStyles = {
+  map: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    top: "0px",
+  },
+};
+
+export class Map extends React.Component {
+  // constructor sets current location
   constructor(props) {
     super(props);
-    this.state = {
-      // this is all stuff from google-react tutorial
-      showingInfoWindow: false, // hides/shows infoWindow
-      activeMarker: {}, // shows marker on click
-      selectedPlace: {}, // shows info window to selected marker
-      markerObjects: [],
-      mapTypeControl: true,
-    };
 
-    this.onMarkerMounted = (element) => {
-      this.setState((prevState) => ({
-        markerObjects: [...prevState.markerObjects, element.marker],
-      }));
+    // initial center set to portland below
+    const { lat, lng } = this.props.initialCenter;
+
+    this.state = {
+      lastClick: null,
+      currentLocation: {
+        lat: lat,
+        lng: lng,
+      },
     };
   }
 
-  // sets active marker as this one, props as the location of the marker
-  // I think? .. and switches the state of the infowindow on/off
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: !this.state.showingInfoWindow,
-    });
+  componentDidUpdate(prevProps, prevState) {
+    // for in case of network issues...
+    if (prevProps.google !== this.props.google) {
+      this.loadMap();
+    }
+    // to load it to the readers current locale
+    if (prevState.currentLocation !== this.state.currentLocation) {
+      this.recenterMap();
+    }
+  }
 
-  // hides the info window
-  onClose = (props) => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
+  recenterMap() {
+    const map = this.map;
+    const current = this.state.currentLocation;
+
+    const google = this.props.google;
+    const gmaps = google.maps;
+
+    if (map) {
+      let center = new gmaps.LatLng(current.lat, current.lng);
+      map.panTo(center);
+    }
+  }
+
+  // set's a callback to fetch current location.
+  componentDidMount() {
+    if (this.props.centerAroundCurrentLocation) {
+      if (navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const coords = pos.coords;
+          this.setState({
+            currentLocation: {
+              lat: coords.latitude,
+              lng: coords.longitude,
+            },
+          });
+        });
+      }
+    }
+    this.loadMap();
+  }
+
+  // grabs reference to DOM and see's where you want your map placed
+  loadMap() {
+    if (this.props && this.props.google) {
+      // checks is google available
+      const { google } = this.props;
+      const gmaps = google.maps;
+
+      // refs is deprecated, dunno what to do here... tutorial.
+      const mapRef = this.refs.map;
+      const node = ReactDOM.findDOMNode(mapRef);
+
+      // reference to Dom element
+
+      let { zoom } = this.props;
+      const { lat, lng } = this.state.currentLocation;
+      const center = new gmaps.LatLng(lat, lng);
+
+      const mapConfig = Object.assign(
+        {},
+        {
+          center: center,
+          zoom: zoom,
+          // this removes the funny buttons stuff, leaves only map.
+          disableDefaultUI: true,
+        }
+      );
+
+      // maps.Map() is constructor that makes the map
+      this.map = new gmaps.Map(node, mapConfig);
+
+      this.map.addListener("click", (evt) => {
+        this.setState({ lastClick: evt.latLng.toJSON() });
+        var marker = new gmaps.Marker({
+          position: this.state.lastClick,
+          title: "new marker!",
+        });
+        marker.setMap(this.map);
+        // this connects the onMapClick function of the child/map to the onMapClicked function of the parent/map container function.
+        this.props.onMapClick(this.state.lastClick);
       });
     }
-  };
+  }
 
+  // function holdStuff(location) {
+
+  // }
+  // get's that prev Mapker picks browser location
+  // parent-child component communication
+  renderChildren() {
+    const { children } = this.props;
+
+    if (!children) return;
+    return React.Children.map(children, (c) => {
+      if (!c) return;
+
+      return React.cloneElement(c, {
+        map: this.map,
+        google: this.props.google,
+        mapCenter: this.state.currentLocation,
+      });
+    });
+  }
+
+  // onMapClick = (evt) => {
+  //   this.props.onMapClick(evt.latLng.toJSON());
+  //   evt.preventDefault();
+  // };
+  // renders the map
   render() {
-    return (
-      // current location tries to get your location and then centers the map around it.  storred in map/location.js
-      <CurrentLocation
-        centerAroundCurrentLocation
-        google={this.props.google}
-        onClick={this.mapClicked}
-      >
-        {/* This is the part that places all the icons on map */}
-        {ListoMarkers.map((item) => (
-          <Marker
-            title={item.name} // title I think is the mouseover?
-            name={item.name} // just a name
-            src={item.icon} // passes image src to marker src property!
-            inSeason={item.inSeason} // get's time in timestamp
-            position={{ lat: item.lat, lng: item.lng }} // place on map
-            onClick={this.onMarkerClick} // does thing above ^^^
-            icon={{
-              url: item.icon, // drops the custom icon
-            }}
-          />
-        ))}
+    const style = Object.assign({}, mapStyles.map);
 
-        {/* this is where we put the info window format*/}
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClick={this.onClose}
+    return (
+      <div>
+        <div
+          className="my_map"
+          style={style}
+          ref="map"
+          onClick={this.onMapClick}
         >
-          {/* this is where the info for infowindow is displayed...
-            can later put in, ratings, size, picture?  whatever */}
-          <div>
-            <img src={this.state.selectedPlace.src} alt="" />
-            <h4>{this.state.selectedPlace.name}</h4>
-            <p>In Season: {this.state.selectedPlace.inSeason}</p>
-          </div>
-        </InfoWindow>
-      </CurrentLocation>
+          {/* this ^^^ sends the clicks up to parent MapContainer to do things with !!!!! */}
+          Loading MAP...
+        </div>
+        {this.renderChildren()} {/* throws the markers back up?*/}
+      </div>
     );
   }
 }
 
-// not sure how to hide the apiKey quite yet...
-// or if I did it right... differentiated from documentation
-MapContainer = GoogleApiWrapper({
-  apiKey: "AIzaSyBDg6EoMTVDIdl2PUR_ZaJ5br6fuMjGWRQ",
-})(MapContainer);
+// default location if can't get geolocation.
+Map.defaultProps = {
+  zoom: 13,
+  initialCenter: {
+    lat: 45.5191,
+    lng: -122.675,
+  },
+  centerAroundCurrentLocation: false,
+  visible: true,
+};
+
+export default Map;
