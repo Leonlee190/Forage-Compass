@@ -3,6 +3,12 @@ import * as mdIcons from "react-icons/md";
 
 export const RightBar = [
   {
+    title: "Home",
+    path: "/",
+    icon: <mdIcons.MdHome />,
+    cName: "nav-text",
+  },
+  {
     title: "Request to put in new item",
     path: "/requests",
     icon: <mdIcons.MdPlaylistAdd />,

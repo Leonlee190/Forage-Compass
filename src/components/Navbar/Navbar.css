@@ -41,6 +41,7 @@
 .nav-menu-left.active {
   left: 0;
   transition: 350ms;
+  overflow-y: scroll;
 }
 
 .nav-menu-right {

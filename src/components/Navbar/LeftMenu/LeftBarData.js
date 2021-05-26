@@ -54,6 +54,19 @@ export const LeftBarData = [
     cName: "nav-text",
     iconClosed: <riIcons.RiArrowDownSFill />,
     iconOpened: <riIcons.RiArrowUpSFill />,
-    subNav: [],
+    subNav: [
+      {
+        title: "Apple",
+        cName: "sub-nav-text",
+      },
+      {
+        title: "Peach",
+        cName: "sub-nav-text",
+      },
+      {
+        title: "Persimomon",
+        cName: "sub-nav-text",
+      },
+    ],
   },
 ];
