@@ -36,7 +36,7 @@ function LeftBar() {
                   <span className="expand-icon">{item.iconClosed}</span>
                 </Link>
               </li>
-              <li>{hasSubNav && subNavJSX}</li>
+              <ul>{hasSubNav && subNavJSX}</ul>
             </ul>
           );
         })}
