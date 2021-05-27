@@ -1,5 +1,3 @@
-// https://www.digitalocean.com/community/tutorials/how-to-integrate-the-google-maps-api-into-react-applications
-import { Marker } from "google-maps-react";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./map.css";
@@ -105,10 +103,23 @@ export class Map extends React.Component {
       this.map = new gmaps.Map(node, mapConfig);
 
       this.map.addListener("click", (evt) => {
+        let contentStyling =
+          "<div>" +
+          '<img src="/icons/raspberry-1-32.png" alt="" />' +
+          "<h4>{this.state.selectedPlace.name}</h4>" +
+          "<p>In Season: {this.state.selectedPlace.inSeason}</p>" +
+          "</div>";
         this.setState({ lastClick: evt.latLng.toJSON() });
-        var marker = new gmaps.Marker({
+        const infoWindow = new gmaps.InfoWindow({
+          content: contentStyling,
+        });
+        const marker = new gmaps.Marker({
+          icon: "/icons/mushroom-32.png",
           position: this.state.lastClick,
           title: "new marker!",
+        });
+        marker.addListener("click", () => {
+          infoWindow.open(this.map, marker);
         });
         marker.setMap(this.map);
         // this connects the onMapClick function of the child/map to the onMapClicked function of the parent/map container function.
