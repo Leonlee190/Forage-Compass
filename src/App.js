@@ -21,6 +21,10 @@ function App() {
             <Contacts />
           </Route>
           <Route path="/">
+<<<<<<< HEAD
+=======
+            {/* the actual map component, centers around your location. */}
+>>>>>>> main
             <MapContainer />
           </Route>
         </Switch>
