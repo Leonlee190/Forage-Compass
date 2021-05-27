@@ -7,6 +7,10 @@ export const LeftSubMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
   const showSubnav = () => setSubnav(!subnav);
 
+  function handleClick(title) {
+    console.log("checked: ", title);
+  }
+
   return (
     <>
       <Link to="#" className={item.cName} onClick={item.subNav && showSubnav}>
@@ -23,8 +27,13 @@ export const LeftSubMenu = ({ item }) => {
       {subnav &&
         item.subNav.map((item, index) => {
           return (
-            <li key={item} className={item.cName}>
-              <input type="checkbox" id={item.title} name={item.title} />
+            <li key={index} className={item.cName}>
+              <input
+                type="checkbox"
+                id={item.title}
+                name={item.title}
+                onClick={handleClick(item.title)}
+              />
               <label for={item.title}>{item.title}</label>
             </li>
           );
