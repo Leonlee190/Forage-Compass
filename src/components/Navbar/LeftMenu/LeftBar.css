@@ -1,4 +1,4 @@
-.nav-text {
+.nav-text-left {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -6,6 +6,11 @@
   list-style: none;
   color: white;
   height: 60px;
+  text-decoration: none;
+}
+
+.nav-text-left:hover {
+  background-color: #9fb8a9;
 }
 
 .sub-nav-text {
@@ -27,8 +32,4 @@ input[type="checkbox"] {
   position: absolute;
   margin-right: 25px;
   right: 0;
-}
-
-.menu-select a:hover {
-  color: tomato;
 }

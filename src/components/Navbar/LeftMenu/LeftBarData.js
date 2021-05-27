@@ -7,7 +7,7 @@ export const LeftBarData = [
   {
     title: "Berry",
     icon: <giIcons.GiElderberry />,
-    cName: "nav-text",
+    cName: "nav-text-left",
     iconClosed: <riIcons.RiArrowDownSFill />,
     iconOpened: <riIcons.RiArrowUpSFill />,
 
@@ -37,7 +37,7 @@ export const LeftBarData = [
   {
     title: "Mushroom",
     icon: <giIcons.GiMushroomGills />,
-    cName: "nav-text",
+    cName: "nav-text-left",
     iconClosed: <riIcons.RiArrowDownSFill />,
     iconOpened: <riIcons.RiArrowUpSFill />,
 
@@ -67,7 +67,7 @@ export const LeftBarData = [
   {
     title: "Fruits",
     icon: <giIcons.GiFruitTree />,
-    cName: "nav-text",
+    cName: "nav-text-left",
     iconClosed: <riIcons.RiArrowDownSFill />,
     iconOpened: <riIcons.RiArrowUpSFill />,
     subNav: [

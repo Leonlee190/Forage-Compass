@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LeftBar.css";
-import "../Navbar.css";
+// import "../Navbar.css";
 
 export const LeftSubMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
