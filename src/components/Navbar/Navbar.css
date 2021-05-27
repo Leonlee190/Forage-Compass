@@ -42,6 +42,12 @@
   left: 0;
   transition: 350ms;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.nav-menu-left.active::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-menu-right {

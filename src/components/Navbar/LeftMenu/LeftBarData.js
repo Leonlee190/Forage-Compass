@@ -13,11 +13,19 @@ export const LeftBarData = [
 
     subNav: [
       {
+        title: "Blackberry",
+        cName: "sub-nav-text",
+      },
+      {
         title: "Blueberry",
         cName: "sub-nav-text",
       },
       {
-        title: "Blackberry",
+        title: "Huckleberry",
+        cName: "sub-nav-text",
+      },
+      {
+        title: "Raspberry",
         cName: "sub-nav-text",
       },
       {
@@ -39,11 +47,19 @@ export const LeftBarData = [
         cName: "sub-nav-text",
       },
       {
-        title: "Porcini Mushroom",
+        title: "Morel Mushroom",
+        cName: "sub-nav-text",
+      },
+      {
+        title: "White Matsutake Mushroom",
         cName: "sub-nav-text",
       },
       {
         title: "Oyster Mushroom",
+        cName: "sub-nav-text",
+      },
+      {
+        title: "Porcini Mushroom",
         cName: "sub-nav-text",
       },
     ],
@@ -60,11 +76,19 @@ export const LeftBarData = [
         cName: "sub-nav-text",
       },
       {
+        title: "Lemon",
+        cName: "sub-nav-text",
+      },
+      {
         title: "Peach",
         cName: "sub-nav-text",
       },
       {
-        title: "Persimomon",
+        title: "Persimmon",
+        cName: "sub-nav-text",
+      },
+      {
+        title: "Pear",
         cName: "sub-nav-text",
       },
     ],
