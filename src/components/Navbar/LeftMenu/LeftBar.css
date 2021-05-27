@@ -16,7 +16,7 @@
   list-style: none;
   color: white;
   height: 60px;
-  margin-left: 17px;
+  margin-left: 15px;
 }
 
 input[type="checkbox"] {
@@ -27,4 +27,8 @@ input[type="checkbox"] {
   position: absolute;
   margin-right: 25px;
   right: 0;
+}
+
+.menu-select a:hover {
+  color: tomato;
 }
