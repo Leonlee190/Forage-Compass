@@ -7,6 +7,7 @@
   color: white;
   height: 60px;
   text-decoration: none;
+  font-size: 21px;
 }
 
 .nav-text-left:hover {
@@ -14,14 +15,14 @@
 }
 
 .sub-nav-text {
+  background-color: #44554b;
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 0px 0px 0px 16px;
+  padding: 0px 15px 0px 27px;
   list-style: none;
   color: white;
   height: 60px;
-  margin-left: 15px;
 }
 
 input[type="checkbox"] {
