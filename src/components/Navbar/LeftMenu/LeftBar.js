@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 import { LeftBarData } from "./LeftBarData";
+import { LeftSubMenu } from "./LeftSubMenu";
+import "./LeftBar.css";
 
 function LeftBar() {
-  const [subnav, setSubnav] = useState(false);
-
-  const showSubnav = () => setSubnav(!subnav);
-
   return (
     <>
       <div className="left-menu">
         {LeftBarData.map((item, index) => {
-          return (
-            <li key={index} className={item.cName}>
-              {item.icon}
-              <span>{item.title}</span>
-            </li>
-          );
+          return <LeftSubMenu item={item} key={index} />;
         })}
       </div>
     </>

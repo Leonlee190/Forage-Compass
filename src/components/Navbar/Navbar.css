@@ -41,6 +41,13 @@
 .nav-menu-left.active {
   left: 0;
   transition: 350ms;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.nav-menu-left.active::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-menu-right {
@@ -60,17 +67,17 @@
   transition: 350ms;
 }
 
-.nav-text {
+.nav-text-right {
   color: white; /* added in to see da things, can remove later*/
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 8px 0px 8px 16px;
+  padding: 8px 0px 8px 10px;
   list-style: none;
   height: 60px;
 }
 
-.nav-text a {
+.nav-text-right a {
   text-decoration: none;
   color: white;
   font-size: 18px;
@@ -78,12 +85,12 @@
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 10px;
   border-radius: 4px;
 }
 
-.nav-text a:hover {
-  background-color: #068c3c;
+.nav-text-right a:hover {
+  background-color: #9fb8a9;
 }
 
 .nav-menu-items {

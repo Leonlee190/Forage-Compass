@@ -1,0 +1,36 @@
+.nav-text-left {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 8px 0px 8px 16px;
+  list-style: none;
+  color: white;
+  height: 60px;
+  text-decoration: none;
+  font-size: 21px;
+}
+
+.nav-text-left:hover {
+  background-color: #9fb8a9;
+}
+
+.sub-nav-text {
+  background-color: #44554b;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0px 15px 0px 27px;
+  list-style: none;
+  color: white;
+  height: 60px;
+}
+
+input[type="checkbox"] {
+  margin: 0px 10px 0px 10px;
+}
+
+.expand-icon {
+  position: absolute;
+  margin-right: 25px;
+  right: 0;
+}
