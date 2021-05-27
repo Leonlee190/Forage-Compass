@@ -32,9 +32,11 @@ export const LeftSubMenu = ({ item }) => {
                 type="checkbox"
                 id={item.title}
                 name={item.title}
-                onClick={handleClick(item.title)}
+                onChange={(e) => {
+                  handleClick(item.title);
+                }}
               />
-              <label for={item.title}>{item.title}</label>
+              <label htmlFor={item.title}>{item.title}</label>
             </li>
           );
         })}
