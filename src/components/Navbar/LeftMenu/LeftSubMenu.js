@@ -41,5 +41,3 @@ export const LeftSubMenu = ({ item }) => {
     </>
   );
 };
-
-// export default LeftSubMenu;
