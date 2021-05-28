@@ -119,12 +119,12 @@ MongoClient.connect(dbConnectionURI, {
     debug("Connected to Database");
 
     dbForager = client.db("forager");
-
-    // Need a way to pass this db object to route modules.  Looked up several methods
+    app.locals.db = dbForager;
+    // Need a way to pass this db object to route modules. Looked up several methods:
     // 1.  insert as middleware to request object (...req.db = db)
     // 2.  create a third module that has db utilites in there to return it's this pointer
     // 3.  leverage express's way of passing data between routes, app.local
-    app.locals.db = dbForager;
+    // Went with option 3, mainly because it felt that was exaclty why they added that to express
     app.locals.colLocation = dbForager.collection("location");
 
     server.listen(PORT);
@@ -136,4 +136,4 @@ MongoClient.connect(dbConnectionURI, {
     debug(error);
   });
 
-module.exports = dbForager;
+module.exports = app;
