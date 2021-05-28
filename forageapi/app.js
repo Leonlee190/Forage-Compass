@@ -11,6 +11,7 @@ const debug = require("debug")("forageapi:server");
 const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const locationsRouter = require("./routes/locations");
+const categoriesRouter = require("./routes/categories");
 
 const PORT = normalizePort(process.env.PORT || 3000);
 
@@ -94,6 +95,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/locations", locationsRouter);
+app.use("/categories", categoriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -126,6 +128,7 @@ MongoClient.connect(dbConnectionURI, {
     // 3.  leverage express's way of passing data between routes, app.local
     // Went with option 3, mainly because it felt that was exaclty why they added that to express
     app.locals.colLocation = dbForager.collection("location");
+    app.locals.colCategory = dbForager.collection("category");
 
     server.listen(PORT);
     server.on("error", onError);
