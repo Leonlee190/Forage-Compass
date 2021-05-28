@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Requests from "./pages/Requests";
 import Reports from "./pages/Reports";
 import Contacts from "./pages/Contacts";
-import { MapContainer } from "./components/Map/MapContainer";
+import { MapContainer } from "./components/map/MapContainer";
 
 function App() {
   return (
