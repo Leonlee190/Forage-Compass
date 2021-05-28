@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./map.css"; // minor styling here
-import Map from "./Map"; // centers map @ curr loc
+import Map from "./map"; // centers map @ curr loc
 import { ListoMarkers } from "./playMarkerData";
 
 export class MapContainer extends Component {
