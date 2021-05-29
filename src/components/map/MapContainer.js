@@ -107,5 +107,5 @@ export class MapContainer extends Component {
 // not sure how to hide the apiKey quite yet...
 // or if I did it right... differentiated from documentation
 MapContainer = GoogleApiWrapper({
-  apiKey: "AIzaSyBDg6EoMTVDIdl2PUR_ZaJ5br6fuMjGWRQ",
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(MapContainer);
