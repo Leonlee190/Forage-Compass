@@ -1,0 +1,59 @@
+h1,
+h2,
+h3 {
+  text-align: center;
+  color: #012b12;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
+}
+h1 {
+  padding: 8% 0 2% 0;
+  margin-top: 5%;
+}
+
+.descrip {
+  text-align: center;
+  color: #012b12;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
+  font-size: large;
+}
+
+.wholePage {
+  background-color: bisque;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: -5;
+}
+
+#cardHolder {
+  padding-top: 30px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 10px;
+  border: #012b12 solid 1px;
+  border-radius: 3px;
+  width: 200px;
+  margin: 5px;
+  text-align: center;
+}
+
+.talking {
+  display: block;
+  width: 600px;
+  margin: 0 auto;
+  padding-top: 20px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .talking {
+    width: 100%;
+  }
+}
