@@ -114,7 +114,7 @@ export class Map extends React.Component {
           content: contentStyling,
         });
         const marker = new gmaps.Marker({
-          icon: "/icons/mushroom-32.png",
+          icon: "/icons/mushroom.png",
           position: this.state.lastClick,
           title: "new marker!",
         });
