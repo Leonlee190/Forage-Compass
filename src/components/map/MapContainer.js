@@ -4,6 +4,7 @@ import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./map.css"; // minor styling here
 import Map from "./map"; // centers map @ curr loc
 import { ListoMarkers } from "./playMarkerData";
+import axios from "axios";
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -23,10 +24,16 @@ export class MapContainer extends Component {
         markerObjects: [...prevState.markerObjects, element.marker],
       }));
     };
+  }
 
-    // this.map.addListener("click", (evt) => {
-    //   console.log("clicked again.");
+  componentDidMount() {
+    // NOTE!!!  THIS IS WHERE WE WILL MAKE REQUEST TO SERVER, I THINK...
+    // probs need some check make sure server is up
+    // axios.get("http://localhost:3001/locations").then((response) => {
+    //   console.log(response.data);
+    //   console.log("hello world");
     // });
+    console.log("hello world");
   }
 
   // sets active marker as this one, props as the location of the marker
@@ -73,18 +80,17 @@ export class MapContainer extends Component {
         {ListoMarkers.map((item) => (
           <Marker
             ref={this.onMarkerMounted}
-            title={item.name} // title I think is the mouseover?
-            name={item.name} // just a name
-            src={item.icon} // passes image src to marker src property!
-            inSeason={item.inSeason} // get's time in timestamp
+            key={item.key}
+            name={item.name} // title I think is the mouseover?
+            variety={item.variety} // just a name
+            src={"/icons/" + item.variety.toLowerCase() + ".png"} // passes image src to marker src property!
             position={{ lat: item.lat, lng: item.lng }} // place on map
             onClick={this.onMarkerClick} // does thing above ^^^
             icon={{
-              url: item.icon, // drops the custom icon
+              url: "/icons/" + item.variety.toLowerCase() + ".png", // drops the custom icon
             }}
           />
         ))}
-
         {/* this is where we put the info window format*/}
         <InfoWindow
           marker={this.state.activeMarker}
@@ -96,7 +102,7 @@ export class MapContainer extends Component {
           <div>
             <img src={this.state.selectedPlace.src} alt="" />
             <h4>{this.state.selectedPlace.name}</h4>
-            <p>In Season: {this.state.selectedPlace.inSeason}</p>
+            <p>{this.state.selectedPlace.variety}</p>
           </div>
         </InfoWindow>
       </Map>
