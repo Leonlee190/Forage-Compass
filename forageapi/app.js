@@ -12,6 +12,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const locationsRouter = require("./routes/locations");
 const categoriesRouter = require("./routes/categories");
+const cors = require("cors");
 
 const PORT = normalizePort(process.env.PORT || 3000);
 
@@ -21,6 +22,7 @@ const http = require("http");
 const server = http.createServer(app);
 
 const { MongoClient } = require("mongodb");
+const { ppid } = require("process");
 const dbConnectionURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@cluster0.5up0o.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 let dbForager;
 
@@ -92,6 +94,13 @@ app.use(express.json()); // Force inbound requests to JSON payloads
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// Enable CORS suport for localhost only
+var corsOptions = {
+  origin: "http://localhost",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 app.use("/", indexRouter);
 app.use("/locations", locationsRouter);
