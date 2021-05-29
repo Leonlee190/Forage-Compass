@@ -40,16 +40,19 @@ router.post("/", async (req, res, next) => {
   // First need to validate that the requested entry is valid
   let location = await validateLocation(req.body, req.app.locals.colCategory);
 
+  res.status(406); // Assume this will encounter an error
   if (location.valid) {
     debug(`Adding location for [${req.body.name}]`);
     await req.app.locals.colLocation
       .insertOne(req.body)
       .then((result) => {
-        res.send(`Location for ${req.body.name} was added to the database`);
+        res.status(200);
+        res.send(`Location added`);
       })
-      .catch((error) => debug(error));
+      .catch((error) => {
+        res.send(error.message);
+      });
   } else {
-    res.status(406);
     res.send(`Invalid location information provided ${location.reason}`);
   }
 });
@@ -57,8 +60,6 @@ router.post("/", async (req, res, next) => {
 ///////////////////////////////////////
 // CRUD - READ from persistent storage
 //
-
-/* GET all locations without any kind of filter */
 router.get("/", async (req, res, next) => {
   await req.app.locals.colLocation
     .find()
@@ -71,9 +72,48 @@ router.get("/", async (req, res, next) => {
 ///////////////////////////////////////
 // CRUD - UPDATE persistent storage
 //
+router.put("/", async (req, res, next) => {
+  let location = await validateLocation(req.body, req.app.locals.colCategory);
+  res.status(406); // Assume this will encounter an error
+
+  if (location.valid) {
+    debug(`Updating location for [${req.body.name}]`);
+    await req.app.locals.colLocation
+      .findOneAndReplace({ name: req.body.name }, req.body)
+      .then((result) => {
+        if (result.lastErrorObject.updatedExisting === true) {
+          res.status(200);
+          res.send("Location updated");
+        } else {
+          res.send(
+            `Location [${req.body.name}] was not found, so nothing was updated`
+          );
+        }
+      })
+      .catch((error) => {
+        res.send(error.message);
+      });
+  } else {
+    res.send(`Invalid location information provided ${location.reason}`);
+  }
+});
 
 ///////////////////////////////////////
 // CRUD - DELETE from persistent storage
 //
+router.delete("/", async (req, res, next) => {
+  await req.app.locals.colLocation
+    .deleteOne({ name: req.query.name })
+    .then((results) => {
+      if (results.deletedCount === 1) {
+        res.status(200);
+        res.send("Location deleted");
+      } else {
+        res.status(406);
+        res.send(`Location not found in database`);
+      }
+    })
+    .catch((error) => res.send(error.message));
+});
 
 module.exports = router;
