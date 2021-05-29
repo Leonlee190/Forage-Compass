@@ -61,8 +61,10 @@ router.post("/", async (req, res, next) => {
 // CRUD - READ from persistent storage
 //
 router.get("/", async (req, res, next) => {
+  let varietyFilter = req.query.variety ? { variety: req.query.variety } : {};
+
   await req.app.locals.colLocation
-    .find()
+    .find(varietyFilter)
     .toArray()
     .then((results) => {
       res.status(200).json(results);
