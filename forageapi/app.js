@@ -11,6 +11,8 @@ const debug = require("debug")("forageapi:server");
 const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const locationsRouter = require("./routes/locations");
+const categoriesRouter = require("./routes/categories");
+const cors = require("cors");
 
 const PORT = normalizePort(process.env.PORT || 3000);
 
@@ -20,6 +22,7 @@ const http = require("http");
 const server = http.createServer(app);
 
 const { MongoClient } = require("mongodb");
+const { ppid } = require("process");
 const dbConnectionURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@cluster0.5up0o.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 let dbForager;
 
@@ -92,8 +95,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Enable CORS suport for localhost only
+var corsOptions = {
+  origin: "http://localhost",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
+
 app.use("/", indexRouter);
 app.use("/locations", locationsRouter);
+app.use("/categories", categoriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -119,13 +130,14 @@ MongoClient.connect(dbConnectionURI, {
     debug("Connected to Database");
 
     dbForager = client.db("forager");
-
-    // Need a way to pass this db object to route modules.  Looked up several methods
+    app.locals.db = dbForager;
+    // Need a way to pass this db object to route modules. Looked up several methods:
     // 1.  insert as middleware to request object (...req.db = db)
     // 2.  create a third module that has db utilites in there to return it's this pointer
     // 3.  leverage express's way of passing data between routes, app.local
-    app.locals.db = dbForager;
+    // Went with option 3, mainly because it felt that was exaclty why they added that to express
     app.locals.colLocation = dbForager.collection("location");
+    app.locals.colCategory = dbForager.collection("category");
 
     server.listen(PORT);
     server.on("error", onError);
@@ -136,4 +148,4 @@ MongoClient.connect(dbConnectionURI, {
     debug(error);
   });
 
-module.exports = dbForager;
+module.exports = app;
