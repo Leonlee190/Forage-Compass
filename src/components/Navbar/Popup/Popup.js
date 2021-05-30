@@ -17,6 +17,7 @@ const Popup = (props) => {
       variety: varietyValue,
     };
     console.log(dataPackage);
+    props.pushItUp(dataPackage);
     props.handleClose();
   };
   const nameChange = (event) => {

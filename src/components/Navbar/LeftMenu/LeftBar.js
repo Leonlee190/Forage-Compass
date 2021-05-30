@@ -8,10 +8,16 @@ import "./LeftBar.css";
 
 function LeftBar() {
   const [isOpen, setIsOpen] = useState(false);
+  var infoPackage;
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
     console.log("open... close... open... close...");
+  };
+
+  const pushItUp = (dataPackage) => {
+    console.log("pushin' it up up up...");
+    console.log(dataPackage);
   };
 
   return (
@@ -20,7 +26,7 @@ function LeftBar() {
         <Link to="#" className="add-button" onClick={togglePopup}>
           <biIcons.BiLocationPlus />
         </Link>
-        {isOpen && <Popup handleClose={togglePopup} />}
+        {isOpen && <Popup handleClose={togglePopup} pushItUp={pushItUp} />}
       </div>
       <div className="left-menu">
         {LeftBarData.map((item, index) => {
