@@ -114,7 +114,7 @@ export class Map extends React.Component {
           content: contentStyling,
         });
         const marker = new gmaps.Marker({
-          icon: "/icons/mushroom-32.png",
+          icon: "/icons/mushroom.png",
           position: this.state.lastClick,
           title: "new marker!",
         });
@@ -128,9 +128,6 @@ export class Map extends React.Component {
     }
   }
 
-  // function holdStuff(location) {
-
-  // }
   // get's that prev Mapker picks browser location
   // parent-child component communication
   renderChildren() {
@@ -148,11 +145,6 @@ export class Map extends React.Component {
     });
   }
 
-  // onMapClick = (evt) => {
-  //   this.props.onMapClick(evt.latLng.toJSON());
-  //   evt.preventDefault();
-  // };
-  // renders the map
   render() {
     const style = Object.assign({}, mapStyles.map);
 
