@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LeftBar.css";
@@ -19,6 +20,12 @@ export const LeftSubMenu = ({ item }) => {
   function handleClick(title, checked) {
     console.log("checked: ", title, checked);
   }
+
+  const componentDidMount = () => {
+    axios.get(URL + "locations").then((res) => {
+      console.log(res.data);
+    });
+  };
 
   return (
     <>
