@@ -8,7 +8,7 @@ import { RightBar } from "./RightMenu/RightBar";
 import LeftBar from "./LeftMenu/LeftBar";
 import { IconContext } from "react-icons";
 
-function Navbar() {
+function Navbar(props) {
   {
     /* Using state to configure when to open and close the pop out menu. Function below to trigger state change. */
   }
@@ -18,6 +18,11 @@ function Navbar() {
   const showRightbar = () => setRightbar(!rightbar);
   const showLeftbar = () => setLeftbar(!leftbar);
 
+  const pushItNav = (dataPackage) => {
+    console.log("Pushed up to to the nav bar.");
+    console.log(dataPackage);
+    props.transferData(dataPackage);
+  };
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -41,7 +46,7 @@ function Navbar() {
                 <aiIcons.AiOutlineClose />
               </Link>
             </li>
-            <LeftBar />
+            <LeftBar pushItNav={pushItNav} />
           </ul>
         </nav>
         {/* Setting right menu bar pop out functionality. 

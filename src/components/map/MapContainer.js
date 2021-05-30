@@ -83,7 +83,13 @@ export class MapContainer extends Component {
     console.log(data);
   };
 
+  printAstatement = () => {
+    console.log("This was printed in map container...");
+  };
+
   render() {
+    console.log("rendering the mapContainer");
+    console.log("data package: ", this.state.dataPackage);
     return (
       // current location tries to get your location and then centers the map around it.  storred in map/location.js
       <Map

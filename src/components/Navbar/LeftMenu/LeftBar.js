@@ -6,7 +6,7 @@ import * as biIcons from "react-icons/bi";
 import { Link } from "react-router-dom";
 import "./LeftBar.css";
 
-function LeftBar() {
+function LeftBar(props) {
   const [isOpen, setIsOpen] = useState(false);
   var infoPackage;
 
@@ -18,6 +18,7 @@ function LeftBar() {
   const pushItUp = (dataPackage) => {
     console.log("pushin' it up up up...");
     console.log(dataPackage);
+    props.pushItNav(dataPackage);
   };
 
   return (
