@@ -11,6 +11,7 @@ function LeftBar() {
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
+    console.log("open... close... open... close...");
   };
 
   return (

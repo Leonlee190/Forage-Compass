@@ -17,6 +17,7 @@ export class MapContainer extends Component {
       markerObjects: [], // holds array of the markers.
       mapTypeControl: true,
       lastClick: null,
+      placesResults: [], // this might hold all the markers on map
     };
 
     this.onMarkerMounted = (element) => {
@@ -29,11 +30,29 @@ export class MapContainer extends Component {
   componentDidMount() {
     // NOTE!!!  THIS IS WHERE WE WILL MAKE REQUEST TO SERVER, I THINK...
     // probs need some check make sure server is up
-    // axios.get("http://localhost:3001/locations").then((response) => {
-    //   console.log(response.data);
-    //   console.log("hello world");
-    // });
-    console.log("hello world");
+    axios
+      .get("http://localhost:3001/locations")
+      .then((response) => {
+        // console.log(response.data);
+        const results = response.data.map((marker) => {
+          return {
+            key: marker._id,
+            variety: marker.variety,
+            name: marker.name,
+            lat: marker.latitude,
+            lng: marker.longitude,
+          };
+        });
+        console.log(results);
+        this.setState({
+          placesResults: results,
+        });
+        console.log("hello world");
+      })
+      .catch((error) => {
+        console.log("Something went wrong...");
+        console.log(error);
+      });
   }
 
   // sets active marker as this one, props as the location of the marker
@@ -64,10 +83,6 @@ export class MapContainer extends Component {
     console.log(data);
   };
 
-  // handleClick = (location) => {
-  //   console.log("we found the parent.");
-  //   console.log(location);
-  // };
   render() {
     return (
       // current location tries to get your location and then centers the map around it.  storred in map/location.js
@@ -77,20 +92,21 @@ export class MapContainer extends Component {
         onMapClick={this.onMapClicked}
       >
         {/* This is the part that places all the icons on map */}
-        {ListoMarkers.map((item) => (
+        {this.state.placesResults.map((item) => (
           <Marker
-            ref={this.onMarkerMounted}
+            ret={this.onMarkerMounted}
             key={item.key}
-            name={item.name} // title I think is the mouseover?
-            variety={item.variety} // just a name
+            variety={item.variety}
+            name={item.name}
+            position={{ lat: item.lat, lng: item.lng }}
+            onClick={this.onMarkerClick}
             src={"/icons/" + item.variety.toLowerCase() + ".png"} // passes image src to marker src property!
-            position={{ lat: item.lat, lng: item.lng }} // place on map
-            onClick={this.onMarkerClick} // does thing above ^^^
             icon={{
               url: "/icons/" + item.variety.toLowerCase() + ".png", // drops the custom icon
             }}
           />
         ))}
+
         {/* this is where we put the info window format*/}
         <InfoWindow
           marker={this.state.activeMarker}
