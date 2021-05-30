@@ -1,15 +1,31 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LeftBar.css";
-// import "../Navbar.css";
+
+let URL = "http://localhost:3001/";
 
 export const LeftSubMenu = ({ item }) => {
+  const [check, setCheck] = useState(new Map());
+  const showCheck = (item) =>
+    setCheck(
+      check.has(item)
+        ? check.set(item, !check.get(item))
+        : check.set(item, true)
+    );
+
   const [subnav, setSubnav] = useState(false);
   const showSubnav = () => setSubnav(!subnav);
 
-  function handleClick(title) {
-    console.log("checked: ", title);
+  function handleClick(title, checked) {
+    console.log("checked: ", title, checked);
   }
+
+  const componentDidMount = () => {
+    axios.get(URL + "locations").then((res) => {
+      console.log(res.data);
+    });
+  };
 
   return (
     <>
@@ -32,8 +48,10 @@ export const LeftSubMenu = ({ item }) => {
                 type="checkbox"
                 id={item.title}
                 name={item.title}
+                checked={check.get(item.title)}
                 onChange={(e) => {
-                  handleClick(item.title);
+                  showCheck(item.title);
+                  handleClick(item.title, check);
                 }}
               />
               <label htmlFor={item.title}>{item.title}</label>
