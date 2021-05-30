@@ -2,7 +2,6 @@ import React from "react";
 import "./Popup.css";
 import { Link } from "react-router-dom";
 import * as aiIcons from "react-icons/ai";
-import axios from "axios";
 
 const Popup = (props) => {
   return (

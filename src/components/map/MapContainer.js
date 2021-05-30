@@ -27,6 +27,10 @@ export class MapContainer extends Component {
     };
   }
 
+  componentDidUpdate(nextProps) {
+    console.log("From Map Update:", this.props.checked);
+  }
+
   componentDidMount() {
     // NOTE!!!  THIS IS WHERE WE WILL MAKE REQUEST TO SERVER, I THINK...
     // probs need some check make sure server is up
@@ -48,6 +52,7 @@ export class MapContainer extends Component {
           placesResults: results,
         });
         console.log("hello world");
+        console.log("From Map:", this.props.checked);
       })
       .catch((error) => {
         console.log("Something went wrong...");
@@ -81,6 +86,7 @@ export class MapContainer extends Component {
     });
     console.log("Did it work finally?...");
     console.log(data);
+    console.log("From Map Click:", this.props.checked);
   };
 
   render() {

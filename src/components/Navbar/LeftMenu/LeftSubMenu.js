@@ -1,31 +1,18 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import CheckContext from "./CheckContext";
 import "./LeftBar.css";
 
-let URL = "http://localhost:3001/";
-
 export const LeftSubMenu = ({ item }) => {
-  const [check, setCheck] = useState(new Map());
-  const showCheck = (item) =>
-    setCheck(
-      check.has(item)
-        ? check.set(item, !check.get(item))
-        : check.set(item, true)
-    );
-
   const [subnav, setSubnav] = useState(false);
   const showSubnav = () => setSubnav(!subnav);
 
-  function handleClick(title, checked) {
-    console.log("checked: ", title, checked);
+  function handleClick(title) {
+    changeCheck(title);
+    console.log("From Sub:", check);
   }
 
-  const componentDidMount = () => {
-    axios.get(URL + "locations").then((res) => {
-      console.log(res.data);
-    });
-  };
+  const { check, changeCheck } = useContext(CheckContext);
 
   return (
     <>
@@ -46,15 +33,14 @@ export const LeftSubMenu = ({ item }) => {
             <li key={index} className={item.cName}>
               <input
                 type="checkbox"
-                id={item.title}
-                name={item.title}
-                checked={check.get(item.title)}
+                id={item.type}
+                name={item.type}
+                checked={check.get(item.type)}
                 onChange={(e) => {
-                  showCheck(item.title);
-                  handleClick(item.title, check);
+                  handleClick(item.type);
                 }}
               />
-              <label htmlFor={item.title}>{item.title}</label>
+              <label htmlFor={item.type}>{item.title}</label>
             </li>
           );
         })}

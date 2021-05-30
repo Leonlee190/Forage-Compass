@@ -24,7 +24,7 @@ function LeftBar() {
       </div>
       <div className="left-menu">
         {LeftBarData.map((item, index) => {
-          return <LeftSubMenu item={item} key={index} />;
+          return <LeftSubMenu item={item} />;
         })}
       </div>
     </>
