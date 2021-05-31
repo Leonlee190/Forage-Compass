@@ -18,6 +18,7 @@ export class MapContainer extends Component {
       mapTypeControl: true,
       lastClick: null,
       placesResults: [], // this might hold all the markers on map
+      checkedLoc: this.props.parentData.check,
     };
 
     // this I'm not really sure if it does anything or not.
@@ -34,8 +35,8 @@ export class MapContainer extends Component {
     // if the dataPackage... transfered to parentData here is new
     // then we get all the things and update the results.
     if (
-      this.props.parentData &&
-      prevProps.parentData !== this.props.parentData
+      this.props.parentData.appsData &&
+      prevProps.parentData.appsData !== this.props.parentData.appsData
     ) {
       console.log("Re-requesting data from server");
       axios
@@ -117,6 +118,7 @@ export class MapContainer extends Component {
     });
     console.log("Did it work finally?...");
     console.log(data);
+    console.log("From Map Click:", this.props.parantData.check);
   };
 
   printAstatement = () => {

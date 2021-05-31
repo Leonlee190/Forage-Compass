@@ -1,5 +1,4 @@
 import React from "react";
-import * as mdIcons from "react-icons/md";
 import * as riIcons from "react-icons/ri";
 import * as giIcons from "react-icons/gi";
 
@@ -14,22 +13,27 @@ export const LeftBarData = [
     subNav: [
       {
         title: "Blackberry",
+        type: "Blackberry",
         cName: "sub-nav-text",
       },
       {
         title: "Blueberry",
+        type: "Blueberry",
         cName: "sub-nav-text",
       },
       {
         title: "Huckleberry",
+        type: "Huckleberry",
         cName: "sub-nav-text",
       },
       {
         title: "Raspberry",
+        type: "Raspberry",
         cName: "sub-nav-text",
       },
       {
         title: "Marionberry",
+        type: "Marionberry",
         cName: "sub-nav-text",
       },
     ],
@@ -44,22 +48,27 @@ export const LeftBarData = [
     subNav: [
       {
         title: "Chantrelle Mushroom",
+        type: "Chantrelle",
         cName: "sub-nav-text",
       },
       {
         title: "Morel Mushroom",
+        type: "Morel",
         cName: "sub-nav-text",
       },
       {
         title: "White Matsutake Mushroom",
+        type: "Matsutake",
         cName: "sub-nav-text",
       },
       {
         title: "Oyster Mushroom",
+        type: "Oyster",
         cName: "sub-nav-text",
       },
       {
         title: "Porcini Mushroom",
+        type: "Porcini",
         cName: "sub-nav-text",
       },
     ],
@@ -73,22 +82,27 @@ export const LeftBarData = [
     subNav: [
       {
         title: "Apple",
+        type: "Apple",
         cName: "sub-nav-text",
       },
       {
         title: "Lemon",
+        type: "Lemon",
         cName: "sub-nav-text",
       },
       {
         title: "Peach",
+        type: "Peach",
         cName: "sub-nav-text",
       },
       {
         title: "Persimmon",
+        type: "Persimmon",
         cName: "sub-nav-text",
       },
       {
         title: "Pear",
+        type: "Pear",
         cName: "sub-nav-text",
       },
     ],
