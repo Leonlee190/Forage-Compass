@@ -18,7 +18,7 @@ export class MapContainer extends Component {
       mapTypeControl: true,
       lastClick: null,
       placesResults: [], // this might hold all the markers on map
-      checkedLoc: this.props.parentData.check,
+      checkedLoc: this.props.parentData.check, // Holding the checked variety in hashMap
     };
 
     // this I'm not really sure if it does anything or not.
@@ -29,19 +29,13 @@ export class MapContainer extends Component {
     };
   }
 
-  // console.log("From Map Click:", this.props.checked);
-  // console.log("From Map Click state: ", this.state.checkedLoc);
-  // console.log("From Map Click places: ", this.state.placesResults);
-
+  // Function to filter the placesResult by checking with the checkedLoc's values
   // let results = this.state.placesResults.filter((entry) => {
   //   return (
   //     this.state.checkedLoc.has(entry.variety) &&
   //     this.state.checkedLoc.get(entry.variety)
   //   );
   // });
-
-  // console.log("Places: ", this.state.placesResults);
-  // console.log("After Filter: ", results);
 
   componentDidUpdate(prevProps) {
     // checks if the parent data package has been updated.
@@ -75,6 +69,15 @@ export class MapContainer extends Component {
           console.log("Something went wrong...");
           console.log(error);
         });
+    }
+    if (
+      this.props.parentData.check &&
+      prevProps.parentData.check !== this.props.parentData.check
+    ) {
+      console.log(
+        "Checked Location Update Fired: ",
+        this.props.parentData.check
+      );
     }
   }
 
@@ -135,11 +138,11 @@ export class MapContainer extends Component {
     this.setState({
       showingInfoWindow: false,
       activeMarker: null,
-      checkedLoc: this.props.checked,
+      checkedLoc: this.props.parentData.check,
     });
     console.log("Did it work finally?...");
     console.log(data);
-    console.log("From Map Click:", this.props.parantData.check);
+    console.log("From Map Click:", this.props.parentData.check);
   };
 
   printAstatement = () => {

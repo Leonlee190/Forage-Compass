@@ -8,7 +8,10 @@ import React, { useState } from "react";
 import CheckContext from "./components/Navbar/LeftMenu/CheckContext";
 
 function App() {
+  // State to pass into context for getting checked location's values
   const [check, setCheck] = useState(new Map());
+
+  // Function to add the value into the check hashMap when checked
   const changeCheck = (item) => {
     setCheck(
       check.has(item)
@@ -19,10 +22,12 @@ function App() {
     console.log("From App: ", check);
   };
 
+  // Pairing check hashMap and check hashMap changing function to pass into context
   const checkValue = { check, changeCheck };
 
   const [appsData, setData] = useState(null);
 
+  // Sending multiple values into MapContainer.js as props
   const props = { check: check, appsData: appsData };
 
   // part of the prop drilling from popup.js->lb.js->navb.js
@@ -33,6 +38,7 @@ function App() {
     setData(dataPackage);
   };
   return (
+    // Wrapping the whole thing with context to retrieve checked value
     <CheckContext.Provider value={checkValue}>
       <div className="App">
         <Router>
