@@ -29,6 +29,20 @@ export class MapContainer extends Component {
     };
   }
 
+  // console.log("From Map Click:", this.props.checked);
+  // console.log("From Map Click state: ", this.state.checkedLoc);
+  // console.log("From Map Click places: ", this.state.placesResults);
+
+  // let results = this.state.placesResults.filter((entry) => {
+  //   return (
+  //     this.state.checkedLoc.has(entry.variety) &&
+  //     this.state.checkedLoc.get(entry.variety)
+  //   );
+  // });
+
+  // console.log("Places: ", this.state.placesResults);
+  // console.log("After Filter: ", results);
+
   componentDidUpdate(prevProps) {
     // checks if the parent data package has been updated.
     console.log("Inside of updating map container.js");
@@ -80,6 +94,12 @@ export class MapContainer extends Component {
             lng: marker.longitude,
           };
         });
+        // results.filter(function (entry) {
+        //   return (
+        //     this.state.checkedLoc.has(entry.variety) &&
+        //     this.state.checkedLoc.get(entry.variety)
+        //   );
+        // });
         console.log(results);
         this.setState({
           placesResults: results,
@@ -115,6 +135,7 @@ export class MapContainer extends Component {
     this.setState({
       showingInfoWindow: false,
       activeMarker: null,
+      checkedLoc: this.props.checked,
     });
     console.log("Did it work finally?...");
     console.log(data);
