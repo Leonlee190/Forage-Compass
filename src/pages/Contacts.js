@@ -11,7 +11,7 @@ function Contacts() {
       </p>
       <div id="cardHolder">
         <div className="card">
-          <img src="/icons/mushroom.png" alt="mushroom" />
+          <img src="/icons/chantrelle.png" alt="mushroom" />
           <h3>Leon Lee</h3>
           <p>seung2 AT pdx DOT edu</p>
         </div>

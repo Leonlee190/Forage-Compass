@@ -20,11 +20,47 @@ export class MapContainer extends Component {
       placesResults: [], // this might hold all the markers on map
     };
 
+    // this I'm not really sure if it does anything or not.
     this.onMarkerMounted = (element) => {
       this.setState((prevState) => ({
         markerObjects: [...prevState.markerObjects, element.marker],
       }));
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    // checks if the parent data package has been updated.
+    console.log("Inside of updating map container.js");
+    // if the dataPackage... transfered to parentData here is new
+    // then we get all the things and update the results.
+    if (
+      this.props.parentData &&
+      prevProps.parentData !== this.props.parentData
+    ) {
+      console.log("Re-requesting data from server");
+      axios
+        .get("http://localhost:3001/locations")
+        .then((response) => {
+          // console.log(response.data);
+          const results = response.data.map((marker) => {
+            return {
+              key: marker._id,
+              variety: marker.variety,
+              name: marker.name,
+              lat: marker.latitude,
+              lng: marker.longitude,
+            };
+          });
+          console.log(results);
+          this.setState({
+            placesResults: results,
+          });
+        })
+        .catch((error) => {
+          console.log("Something went wrong...");
+          console.log(error);
+        });
+    }
   }
 
   componentDidMount() {
@@ -47,7 +83,7 @@ export class MapContainer extends Component {
         this.setState({
           placesResults: results,
         });
-        console.log("hello world");
+        console.log("hello world, initial pull from server");
       })
       .catch((error) => {
         console.log("Something went wrong...");
@@ -83,7 +119,12 @@ export class MapContainer extends Component {
     console.log(data);
   };
 
+  printAstatement = () => {
+    console.log("This was printed in map container...");
+  };
+
   render() {
+    console.log("rendering the mapContainer");
     return (
       // current location tries to get your location and then centers the map around it.  storred in map/location.js
       <Map
@@ -126,8 +167,7 @@ export class MapContainer extends Component {
   }
 }
 
-// not sure how to hide the apiKey quite yet...
-// or if I did it right... differentiated from documentation
+// wrapper function to hold the api key for requests.
 MapContainer = GoogleApiWrapper({
   apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(MapContainer);

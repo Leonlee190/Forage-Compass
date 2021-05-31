@@ -22,6 +22,7 @@ export class Map extends React.Component {
     const { lat, lng } = this.props.initialCenter;
 
     this.state = {
+      addMarker: false,
       lastClick: null,
       currentLocation: {
         lat: lat,
@@ -39,6 +40,18 @@ export class Map extends React.Component {
     if (prevState.currentLocation !== this.state.currentLocation) {
       this.recenterMap();
     }
+
+    // these were always null, never got updated...
+    // console.log("MapCon prevProps:", prevProps.parentData);
+    // console.log("MapCon Curr Props:", this.props.parentData);
+    // similarly, this function never get's called
+    // if (
+    //   this.props.parentData &&
+    //   this.props.parentData !== prevProps.parentData
+    // ) {
+    //   console.log("Component Update was called");
+    //   this.forceUpdate();
+    // }
   }
 
   recenterMap() {
@@ -103,6 +116,8 @@ export class Map extends React.Component {
       this.map = new gmaps.Map(node, mapConfig);
 
       this.map.addListener("click", (evt) => {
+        // Was trying to prevent the clicks except when wanted.
+        // if (this.state.addMarker) {
         let contentStyling =
           "<div>" +
           '<img src="/icons/raspberry-1-32.png" alt="" />' +
@@ -114,7 +129,7 @@ export class Map extends React.Component {
           content: contentStyling,
         });
         const marker = new gmaps.Marker({
-          icon: "/icons/mushroom.png",
+          icon: "/icons/oyster.png",
           position: this.state.lastClick,
           title: "new marker!",
         });
@@ -124,6 +139,7 @@ export class Map extends React.Component {
         marker.setMap(this.map);
         // this connects the onMapClick function of the child/map to the onMapClicked function of the parent/map container function.
         this.props.onMapClick(this.state.lastClick);
+        // }
       });
     }
   }
