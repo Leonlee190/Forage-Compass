@@ -8,16 +8,16 @@ import "./LeftBar.css";
 
 function LeftBar(props) {
   const [isOpen, setIsOpen] = useState(false);
-  var infoPackage;
 
+  // opens and closes the pop up window.
   const togglePopup = () => {
     setIsOpen(!isOpen);
     console.log("open... close... open... close...");
   };
-
+  // this is the prop drilling function, sending it up.
   const pushItUp = (dataPackage) => {
-    console.log("pushin' it up up up...");
-    console.log(dataPackage);
+    console.log("Data package in Left Bar");
+    // prop pushes it to Nav Bar...
     props.pushItNav(dataPackage);
   };
 
@@ -27,6 +27,7 @@ function LeftBar(props) {
         <Link to="#" className="add-button" onClick={togglePopup}>
           <biIcons.BiLocationPlus />
         </Link>
+        {/* This is where we get the prop to pass the data from. */}
         {isOpen && <Popup handleClose={togglePopup} pushItUp={pushItUp} />}
       </div>
       <div className="left-menu">

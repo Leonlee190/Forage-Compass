@@ -17,22 +17,22 @@ const Popup = (props) => {
   };
   navigator.geolocation.getCurrentPosition(success);
 
+  // this is where we handle hitting the sumit button
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("I clicked the button, did it do the thing?");
     const dataPackage = {
       name: nameValue,
       variety: varietyValue,
       latitude: lat,
       longitude: lng,
     };
-    console.log(dataPackage);
+    console.log("Submit button pressed with :\n", dataPackage);
 
+    // where we make the post request to server.
     axios
       .post("http://localhost:3001/locations", dataPackage)
       .then((response) => {
-        console.log("did it post the data?");
-        console.log(response);
+        console.log("Data post response:/n", response);
       })
       .then(() => {
         props.pushItUp(dataPackage); // this was start of prop drilling
@@ -43,12 +43,15 @@ const Popup = (props) => {
 
     props.handleClose();
   };
+
+  // these handle and record any changes to the name and variety
   const nameChange = (event) => {
     nameValue = event.target.value;
   };
   const varietyChange = (event) => {
     varietyValue = event.target.value;
   };
+
   return (
     <div className="modal">
       <div className="modal_content">

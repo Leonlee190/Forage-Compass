@@ -19,8 +19,8 @@ function Navbar(props) {
   const showLeftbar = () => setLeftbar(!leftbar);
 
   const pushItNav = (dataPackage) => {
-    console.log("Pushed up to to the nav bar.");
-    console.log(dataPackage);
+    console.log("Data package in Nav Bar.");
+    // use prop drilling to push up to app.js
     props.transferData(dataPackage);
   };
   return (
@@ -46,6 +46,7 @@ function Navbar(props) {
                 <aiIcons.AiOutlineClose />
               </Link>
             </li>
+            {/* where we have the left bar with props. */}
             <LeftBar pushItNav={pushItNav} />
           </ul>
         </nav>

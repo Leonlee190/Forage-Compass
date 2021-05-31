@@ -41,32 +41,17 @@ export class Map extends React.Component {
       this.recenterMap();
     }
 
-    console.log("MapCon prevProps:", prevProps.parentData);
-    console.log("MapCon Curr Props:", this.props.parentData);
-    if (
-      this.props.parentData &&
-      this.props.parentData !== prevProps.parentData
-    ) {
-      console.log("Component Update was called");
-      this.forceUpdate();
-      // this.setState({
-      //   addMarker: true,
-      // });
-      // const { google } = this.props;
-      // const gmaps = google.maps;
-      // const marker = new gmaps.Marker({
-      //   icon: "/icons/" + this.props.parentData.variety.toLowerCase() + ".png",
-      //   position: {
-      //     lat: this.props.parentData.latitude,
-      //     lng: this.props.parentData.longitude,
-      //   },
-      //   title: this.parentData.name,
-      // });
-      // marker.addListener("click", () => {
-      //   infoWindow.open(this.map, marker);
-      // });
-      // marker.setMap(this.map);
-    }
+    // these were always null, never got updated...
+    // console.log("MapCon prevProps:", prevProps.parentData);
+    // console.log("MapCon Curr Props:", this.props.parentData);
+    // similarly, this function never get's called
+    // if (
+    //   this.props.parentData &&
+    //   this.props.parentData !== prevProps.parentData
+    // ) {
+    //   console.log("Component Update was called");
+    //   this.forceUpdate();
+    // }
   }
 
   recenterMap() {
@@ -131,29 +116,30 @@ export class Map extends React.Component {
       this.map = new gmaps.Map(node, mapConfig);
 
       this.map.addListener("click", (evt) => {
-        if (this.state.addMarker) {
-          let contentStyling =
-            "<div>" +
-            '<img src="/icons/raspberry-1-32.png" alt="" />' +
-            "<h4>{this.state.selectedPlace.name}</h4>" +
-            "<p>In Season: {this.state.selectedPlace.inSeason}</p>" +
-            "</div>";
-          this.setState({ lastClick: evt.latLng.toJSON() });
-          const infoWindow = new gmaps.InfoWindow({
-            content: contentStyling,
-          });
-          const marker = new gmaps.Marker({
-            icon: "/icons/oyster.png",
-            position: this.state.lastClick,
-            title: "new marker!",
-          });
-          marker.addListener("click", () => {
-            infoWindow.open(this.map, marker);
-          });
-          marker.setMap(this.map);
-          // this connects the onMapClick function of the child/map to the onMapClicked function of the parent/map container function.
-          this.props.onMapClick(this.state.lastClick);
-        }
+        // Was trying to prevent the clicks except when wanted.
+        // if (this.state.addMarker) {
+        let contentStyling =
+          "<div>" +
+          '<img src="/icons/raspberry-1-32.png" alt="" />' +
+          "<h4>{this.state.selectedPlace.name}</h4>" +
+          "<p>In Season: {this.state.selectedPlace.inSeason}</p>" +
+          "</div>";
+        this.setState({ lastClick: evt.latLng.toJSON() });
+        const infoWindow = new gmaps.InfoWindow({
+          content: contentStyling,
+        });
+        const marker = new gmaps.Marker({
+          icon: "/icons/oyster.png",
+          position: this.state.lastClick,
+          title: "new marker!",
+        });
+        marker.addListener("click", () => {
+          infoWindow.open(this.map, marker);
+        });
+        marker.setMap(this.map);
+        // this connects the onMapClick function of the child/map to the onMapClicked function of the parent/map container function.
+        this.props.onMapClick(this.state.lastClick);
+        // }
       });
     }
   }

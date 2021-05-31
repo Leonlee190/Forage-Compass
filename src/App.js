@@ -8,16 +8,13 @@ import React, { useState } from "react";
 
 function App() {
   const [appsData, setData] = useState(null);
-  const contRef = React.createRef();
 
+  // part of the prop drilling from popup.js->lb.js->navb.js
   const transferData = (dataPackage) => {
-    console.log("We hit the top app function... going down!");
-    console.log(appsData);
-    // appsData = dataPackage;
+    console.log("Data Package in app.js, pushing down.");
+    // wasn't sure how to use dataPackage for pushing stuff down.
+    // sets data to const var called appsData
     setData(dataPackage);
-    console.log(appsData);
-    // this.passitDown(dataPackage)
-    // contRef.current.printAstatement();
   };
   return (
     <div className="App">
@@ -35,7 +32,7 @@ function App() {
           </Route>
           <Route path="/">
             {/* the actual map component, centers around your location. */}
-            <MapContainer /*ref={contRef}*/ parentData={appsData} />
+            <MapContainer parentData={appsData} />
           </Route>
         </Switch>
       </Router>
