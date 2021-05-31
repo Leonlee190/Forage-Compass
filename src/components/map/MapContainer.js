@@ -18,6 +18,7 @@ export class MapContainer extends Component {
       mapTypeControl: true,
       lastClick: null,
       placesResults: [], // this might hold all the markers on map
+      checkedLoc: this.props.parentData.check, // Holding the checked variety in hashMap
     };
 
     // this I'm not really sure if it does anything or not.
@@ -28,14 +29,22 @@ export class MapContainer extends Component {
     };
   }
 
+  // Function to filter the placesResult by checking with the checkedLoc's values
+  // let results = this.state.placesResults.filter((entry) => {
+  //   return (
+  //     this.state.checkedLoc.has(entry.variety) &&
+  //     this.state.checkedLoc.get(entry.variety)
+  //   );
+  // });
+
   componentDidUpdate(prevProps) {
     // checks if the parent data package has been updated.
     console.log("Inside of updating map container.js");
     // if the dataPackage... transfered to parentData here is new
     // then we get all the things and update the results.
     if (
-      this.props.parentData &&
-      prevProps.parentData !== this.props.parentData
+      this.props.parentData.appsData &&
+      prevProps.parentData.appsData !== this.props.parentData.appsData
     ) {
       console.log("Re-requesting data from server");
       axios
@@ -61,6 +70,15 @@ export class MapContainer extends Component {
           console.log(error);
         });
     }
+    if (
+      this.props.parentData.check &&
+      prevProps.parentData.check !== this.props.parentData.check
+    ) {
+      console.log(
+        "Checked Location Update Fired: ",
+        this.props.parentData.check
+      );
+    }
   }
 
   componentDidMount() {
@@ -79,6 +97,12 @@ export class MapContainer extends Component {
             lng: marker.longitude,
           };
         });
+        // results.filter(function (entry) {
+        //   return (
+        //     this.state.checkedLoc.has(entry.variety) &&
+        //     this.state.checkedLoc.get(entry.variety)
+        //   );
+        // });
         console.log(results);
         this.setState({
           placesResults: results,
@@ -114,9 +138,11 @@ export class MapContainer extends Component {
     this.setState({
       showingInfoWindow: false,
       activeMarker: null,
+      checkedLoc: this.props.parentData.check,
     });
     console.log("Did it work finally?...");
     console.log(data);
+    console.log("From Map Click:", this.props.parentData.check);
   };
 
   printAstatement = () => {
