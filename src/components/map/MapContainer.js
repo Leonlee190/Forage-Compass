@@ -18,6 +18,7 @@ export class MapContainer extends Component {
       mapTypeControl: true,
       lastClick: null,
       placesResults: [], // this might hold all the markers on map
+      newMarker: {},
     };
 
     this.onMarkerMounted = (element) => {
@@ -25,6 +26,46 @@ export class MapContainer extends Component {
         markerObjects: [...prevState.markerObjects, element.marker],
       }));
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    // console.log("prevProps:", prevProps.parentData);
+    // console.log("Curr Props:", this.props.parentData);
+    // this.componentDidMount(); // this was silly.
+    if (
+      this.props.parentData &&
+      prevProps.parentData !== this.props.parentData
+    ) {
+      console.log("I found the spot!!!!! MapCon line 39");
+      axios
+        .get("http://localhost:3001/locations")
+        .then((response) => {
+          // console.log(response.data);
+          const results = response.data.map((marker) => {
+            return {
+              key: marker._id,
+              variety: marker.variety,
+              name: marker.name,
+              lat: marker.latitude,
+              lng: marker.longitude,
+            };
+          });
+          console.log(results);
+          this.setState({
+            placesResults: results,
+          });
+          console.log("hello world");
+        })
+        .catch((error) => {
+          console.log("Something went wrong...");
+          console.log(error);
+        });
+      // this.setState((prevState) => ({
+      // placesResults: [...prevState.placesResults, this.props.parentData],
+      // newMarker: this.props.parentData,
+      // }));
+      // this.forceUpdate();
+    }
   }
 
   componentDidMount() {
@@ -96,6 +137,7 @@ export class MapContainer extends Component {
         centerAroundCurrentLocation
         google={this.props.google}
         onMapClick={this.onMapClicked}
+        parentsData={this.state.newMarker}
       >
         {/* This is the part that places all the icons on map */}
         {this.state.placesResults.map((item) => (

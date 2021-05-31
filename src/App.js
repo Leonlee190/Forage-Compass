@@ -4,16 +4,17 @@ import Requests from "./pages/Requests";
 import Reports from "./pages/Reports";
 import Contacts from "./pages/Contacts";
 import { MapContainer } from "./components/map/MapContainer";
-import React from "react";
+import React, { useState } from "react";
 
 function App() {
-  var appsData;
+  const [appsData, setData] = useState(null);
   const contRef = React.createRef();
 
   const transferData = (dataPackage) => {
     console.log("We hit the top app function... going down!");
     console.log(appsData);
-    appsData = dataPackage;
+    // appsData = dataPackage;
+    setData(dataPackage);
     console.log(appsData);
     // this.passitDown(dataPackage)
     // contRef.current.printAstatement();
@@ -34,7 +35,7 @@ function App() {
           </Route>
           <Route path="/">
             {/* the actual map component, centers around your location. */}
-            <MapContainer ref={contRef} />
+            <MapContainer /*ref={contRef}*/ parentData={appsData} />
           </Route>
         </Switch>
       </Router>

@@ -34,11 +34,13 @@ const Popup = (props) => {
         console.log("did it post the data?");
         console.log(response);
       })
+      .then(() => {
+        props.pushItUp(dataPackage); // this was start of prop drilling
+      })
       .catch((error) => {
         console.log(error);
       });
 
-    // props.pushItUp(dataPackage); // this was start of prop drilling
     props.handleClose();
   };
   const nameChange = (event) => {
