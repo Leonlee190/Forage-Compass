@@ -18,6 +18,7 @@ export class MapContainer extends Component {
       mapTypeControl: true,
       lastClick: null,
       placesResults: [], // this might hold all the markers on map
+      checkedLoc: this.props.checked,
     };
 
     this.onMarkerMounted = (element) => {
@@ -27,8 +28,8 @@ export class MapContainer extends Component {
     };
   }
 
-  componentDidUpdate(nextProps) {
-    console.log("From Map Update:", this.props.checked);
+  componentDidUpdate() {
+    console.log("update fired: ", this.state.checkedLoc);
   }
 
   componentDidMount() {
@@ -47,12 +48,17 @@ export class MapContainer extends Component {
             lng: marker.longitude,
           };
         });
+        // results.filter(function (entry) {
+        //   return (
+        //     this.state.checkedLoc.has(entry.variety) &&
+        //     this.state.checkedLoc.get(entry.variety)
+        //   );
+        // });
         console.log(results);
         this.setState({
           placesResults: results,
         });
         console.log("hello world");
-        console.log("From Map:", this.props.checked);
       })
       .catch((error) => {
         console.log("Something went wrong...");
@@ -83,10 +89,23 @@ export class MapContainer extends Component {
     this.setState({
       showingInfoWindow: false,
       activeMarker: null,
+      checkedLoc: this.props.checked,
     });
     console.log("Did it work finally?...");
     console.log(data);
     console.log("From Map Click:", this.props.checked);
+    console.log("From Map Click state: ", this.state.checkedLoc);
+    console.log("From Map Click places: ", this.state.placesResults);
+
+    let results = this.state.placesResults.filter((entry) => {
+      return (
+        this.state.checkedLoc.has(entry.variety) &&
+        this.state.checkedLoc.get(entry.variety)
+      );
+    });
+
+    console.log("Places: ", this.state.placesResults);
+    console.log("After Filter: ", results);
   };
 
   render() {
