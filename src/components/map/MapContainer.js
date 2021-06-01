@@ -41,7 +41,7 @@ export class MapContainer extends Component {
     ) {
       console.log("Re-requesting data from server");
       axios
-        .get("htpc.wignalls.net:3001/locations")
+        .get("http://htpc.wignalls.net:3001/locations")
         .then((response) => {
           // console.log(response.data);
           const results = response.data.map((marker) => {
@@ -106,7 +106,7 @@ export class MapContainer extends Component {
     // NOTE!!!  THIS IS WHERE WE WILL MAKE REQUEST TO SERVER, I THINK...
     // probs need some check make sure server is up
     axios
-      .get("htpc.wignalls.net:3001/locations")
+      .get("http://htpc.wignalls.net:3001/locations")
       .then((response) => {
         // console.log(response.data);
         const results = response.data.map((marker) => {
