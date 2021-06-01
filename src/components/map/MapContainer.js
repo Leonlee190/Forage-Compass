@@ -19,6 +19,7 @@ export class MapContainer extends Component {
       lastClick: null,
       placesResults: [], // this might hold all the markers on map
       checkedLoc: this.props.parentData.check, // Holding the checked variety in hashMap
+      displayPlaces: [], // Display only the checked types
     };
 
     // this I'm not really sure if it does anything or not.
@@ -28,14 +29,6 @@ export class MapContainer extends Component {
       }));
     };
   }
-
-  // Function to filter the placesResult by checking with the checkedLoc's values
-  // let results = this.state.placesResults.filter((entry) => {
-  //   return (
-  //     this.state.checkedLoc.has(entry.variety) &&
-  //     this.state.checkedLoc.get(entry.variety)
-  //   );
-  // });
 
   componentDidUpdate(prevProps) {
     // checks if the parent data package has been updated.
@@ -61,7 +54,15 @@ export class MapContainer extends Component {
             };
           });
           console.log(results);
+          // Function to filter the placesResult by checking with the checkedLoc's values
+          let filtered = results.filter((entry) => {
+            return (
+              this.state.checkedLoc.has(entry.variety) &&
+              this.state.checkedLoc.get(entry.variety)
+            );
+          });
           this.setState({
+            displayPlaces: filtered,
             placesResults: results,
           });
         })
@@ -70,13 +71,33 @@ export class MapContainer extends Component {
           console.log(error);
         });
     }
+    // If checkbox's values are different from last prop
     if (
-      this.props.parentData.check &&
-      prevProps.parentData.check !== this.props.parentData.check
+      prevProps.parentData.type !== this.props.parentData.type ||
+      prevProps.parentData.val !== this.props.parentData.val
     ) {
+      // Add the new values into the checked location
+      this.state.checkedLoc.set(
+        this.props.parentData.type,
+        this.props.parentData.val
+      );
+
+      // Filter the placesResult with the new checked locations
+      let filtered = this.state.placesResults.filter((entry) => {
+        return (
+          this.state.checkedLoc.has(entry.variety) &&
+          this.state.checkedLoc.get(entry.variety)
+        );
+      });
+
+      // Set state to re-render with the filtered data
+      this.setState({
+        displayPlaces: filtered,
+      });
+
       console.log(
-        "Checked Location Update Fired: ",
-        this.props.parentData.check
+        "Checked Location Update Fired Display state: ",
+        this.state.checkedLoc
       );
     }
   }
@@ -97,17 +118,14 @@ export class MapContainer extends Component {
             lng: marker.longitude,
           };
         });
-        // results.filter(function (entry) {
-        //   return (
-        //     this.state.checkedLoc.has(entry.variety) &&
-        //     this.state.checkedLoc.get(entry.variety)
-        //   );
-        // });
+
         console.log(results);
         this.setState({
           placesResults: results,
+          checkedLoc: this.props.parentData.check,
         });
         console.log("hello world, initial pull from server");
+        console.log("From update state:", this.state.checkedLoc);
       })
       .catch((error) => {
         console.log("Something went wrong...");
@@ -142,7 +160,6 @@ export class MapContainer extends Component {
     });
     console.log("Did it work finally?...");
     console.log(data);
-    console.log("From Map Click:", this.props.parentData.check);
   };
 
   printAstatement = () => {
@@ -158,8 +175,9 @@ export class MapContainer extends Component {
         google={this.props.google}
         onMapClick={this.onMapClicked}
       >
-        {/* This is the part that places all the icons on map */}
-        {this.state.placesResults.map((item) => (
+        {/* This is the part that places all the icons on map 
+            Now print with displayPlaces because that's the filtered map*/}
+        {this.state.displayPlaces.map((item) => (
           <Marker
             ret={this.onMarkerMounted}
             key={item.key}
