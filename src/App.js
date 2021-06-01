@@ -11,6 +11,10 @@ function App() {
   // State to pass into context for getting checked location's values
   const [check, setCheck] = useState(new Map());
 
+  // Changed variety and it's changed boolean value stored as state
+  const [chosen, setChosen] = useState("");
+  const [chosenVal, setChosenVal] = useState(false);
+
   // Function to add the value into the check hashMap when checked
   const changeCheck = (item) => {
     setCheck(
@@ -19,7 +23,9 @@ function App() {
         : check.set(item, true)
     );
 
-    console.log("From App: ", check);
+    // When checkbox is clicked store the changes
+    setChosen(item);
+    setChosenVal(check.get(item));
   };
 
   // Pairing check hashMap and check hashMap changing function to pass into context
@@ -28,7 +34,13 @@ function App() {
   const [appsData, setData] = useState(null);
 
   // Sending multiple values into MapContainer.js as props
-  const props = { check: check, appsData: appsData };
+  // const props = { check: check, appsData: appsData };
+  const props = {
+    check: check,
+    type: chosen,
+    val: chosenVal,
+    appsData: appsData,
+  };
 
   // part of the prop drilling from popup.js->lb.js->navb.js
   const transferData = (dataPackage) => {
