@@ -9,7 +9,25 @@ import CheckContext from "./components/Navbar/LeftMenu/CheckContext";
 
 function App() {
   // State to pass into context for getting checked location's values
-  const [check, setCheck] = useState(new Map());
+  const [check, setCheck] = useState(
+    new Map([
+      ["Blackberry", true],
+      ["Blueberry", true],
+      ["Huckleberry", true],
+      ["Raspberry", true],
+      ["Marionberry", true],
+      ["Chantrelle", true],
+      ["Morel", true],
+      ["Matsutake", true],
+      ["Oyster", true],
+      ["Porcini", true],
+      ["Apple", true],
+      ["Lemon", true],
+      ["Peach", true],
+      ["Persimmon", true],
+      ["Pear", true],
+    ])
+  );
 
   // Changed variety and it's changed boolean value stored as state
   const [chosen, setChosen] = useState("");
