@@ -15,6 +15,12 @@ function App() {
   const [chosen, setChosen] = useState("");
   const [chosenVal, setChosenVal] = useState(false);
 
+  const [clicked, setClicked] = useState([1, 1]);
+
+  const changeLocation = (lat, lng) => {
+    setClicked([lat, lng]);
+  };
+
   // Function to add the value into the check hashMap when checked
   const changeCheck = (item) => {
     setCheck(
@@ -40,6 +46,7 @@ function App() {
     type: chosen,
     val: chosenVal,
     appsData: appsData,
+    clickedLoc: changeLocation,
   };
 
   // part of the prop drilling from popup.js->lb.js->navb.js
@@ -49,6 +56,7 @@ function App() {
     // sets data to const var called appsData
     setData(dataPackage);
   };
+
   return (
     // Wrapping the whole thing with context to retrieve checked value
     <CheckContext.Provider value={checkValue}>

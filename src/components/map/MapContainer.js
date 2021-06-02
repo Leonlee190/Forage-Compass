@@ -159,8 +159,7 @@ export class MapContainer extends Component {
       activeMarker: null,
       checkedLoc: this.props.parentData.check,
     });
-    console.log("Did it work finally?...");
-    console.log(data);
+    this.props.parentData.clickedLoc(data.Lat, data.Lng);
   };
 
   printAstatement = () => {
