@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import * as aiIcons from "react-icons/ai";
 import axios from "axios";
 
+const url = "https://gandalf.wignalls.net:3001/locations";
+
 const Popup = (props) => {
   let nameValue = "";
   // this is here for the first item in the drop down menu
@@ -30,7 +32,7 @@ const Popup = (props) => {
 
     // where we make the post request to server.
     axios
-      .post("https://gandalf.wignalls.net:3001/locations", dataPackage)
+      .post(url, dataPackage)
       .then((response) => {
         console.log("Data post response:/n", response);
       })

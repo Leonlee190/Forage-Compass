@@ -6,6 +6,7 @@ import Map from "./map"; // centers map @ curr loc
 import { ListoMarkers } from "./playMarkerData";
 import axios from "axios";
 
+const url = "https://gandalf.wignalls.net:3001/locations";
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +42,7 @@ export class MapContainer extends Component {
     ) {
       console.log("Re-requesting data from server");
       axios
-        .get("https://gandalf.wignalls.net:3001/locations")
+        .get(url)
         .then((response) => {
           // console.log(response.data);
           const results = response.data.map((marker) => {
