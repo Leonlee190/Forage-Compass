@@ -123,6 +123,7 @@ export class MapContainer extends Component {
         this.setState({
           placesResults: results,
           checkedLoc: this.props.parentData.check,
+          displayPlaces: results,
         });
         console.log("hello world, initial pull from server");
         console.log("From update state:", this.state.checkedLoc);
