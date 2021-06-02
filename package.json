@@ -16,8 +16,9 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node forageapi/app.js",
     "build": "react-scripts build",
+    "heroku-postbuild": "npm install && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
