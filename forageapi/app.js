@@ -12,6 +12,13 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const locationsRouter = require("./routes/locations");
 const categoriesRouter = require("./routes/categories");
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load(path.resolve(__dirname, "foragerapi.yaml"));
+
+var swaggerOptions = {
+  customCss: ".swagger-ui .topbar { display: none }",
+};
 const cors = require("cors");
 
 const PORT = normalizePort(process.env.PORT || 3000);
@@ -105,16 +112,20 @@ app.use(cors());
 //app.use("/", indexRouter);
 
 // Have Node serve the files for our built React app instead of the indexRouter
-app.use(express.static(path.resolve(__dirname, '../build')));
+app.use(express.static(path.resolve(__dirname, "../build")));
 
 app.use("/locations", locationsRouter);
 app.use("/categories", categoriesRouter);
+app.use(
+  "/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerDocument, swaggerOptions)
+);
 
 // All other GET requests not handled before will return our React app
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../build", "index.html"));
 });
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

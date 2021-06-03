@@ -1,0 +1,45 @@
+openapi: 3.0.1
+info:
+  title: Forager-Compass API
+  description: >-
+    This server, and the related REST API's, are used to faciliate playing the Pax Pamir boardgame remotely.  Client applications wishing to use this API, would only need to worry about the view or presentation aspect of actual gameplay.
+
+
+    All state information is retained by the server, including games in progress, player base, rule enforcement, game replay and undo operations.
+
+
+
+    You can find out more about the actual board game directly from the manafuacturer at  [Wehrlegig Games](http://wehrlegig.com)
+
+  contact:
+    email: seung2@pdx.edu, camilo3@pdx.edu, mwignall@pdx.edu
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  version: 1.0.0
+
+servers:
+  - url: "https://foragecompass.herokuapp.com/"
+  - url: "http://localhost:3001"
+tags:
+  - name: category
+    description: Information pertaining to the the types of items tracked by Forager-Compass
+  - name: location
+    description: Information stored for discovered locations of Forage-Compass items
+paths:
+  /categories:
+    get:
+      tags:
+        - category
+      summary: Get all Forager-Compass supported varieties
+      description: Returns all varietiel information, as a JSON object containing Categories and Varities within each
+      operationId: getCategories
+      responses:
+        200:
+          description: Successfull operation
+          content: {}
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
