@@ -67,7 +67,86 @@ paths:
         "406":
           description: Invalid variety specified
           content: {}
+    post:
+      tags:
+        - location
+      summary: Adds a new location to the list of known locations
+      description: >-
+        Adds the location specified in the body
+      operationId: addLocation
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Bob's secret berry bush
+                latitude:
+                  type: number
+                  format: float
+                  example: 145.535838
+                longitude:
+                  type: number
+                  format: float
+                  example: -122.727242
+                variety:
+                  type: string
+                  format: string
+                  example: Marionberry
+      responses:
+        "200":
+          description: Location Added
+        "406":
+          description: Invalid location information provided
+    put:
+      tags:
+        - location
+      summary: Udates an existing location
+      description: >-
+        Updates the location specified by the `name` parameter, replacing the conents with the new values
+      operationId: updateLocation
+      parameters:
+        - name: name
+          in: query
+          description: Name of an existing location that will be updated
+          required: true
+          schema:
+            type: string
+            format: string
+            example: Bob's secret berry bush
+      requestBody:
+        required: true
+        description: >-
+          Adds the location specified in the body
 
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Bob's secret berry bush
+                latitude:
+                  type: number
+                  format: float
+                  example: 145.535838
+                longitude:
+                  type: number
+                  format: float
+                  example: -122.727242
+                variety:
+                  type: string
+                  format: string
+                  example: Marionberry
+      responses:
+        "200":
+          description: Location Updated
+        "406":
+          description: Invalid location information provided
 components:
   schemas:
     locations:
