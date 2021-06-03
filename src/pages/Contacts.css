@@ -5,6 +5,7 @@ h3 {
   color: #012b12;
   font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
 }
+
 h1 {
   padding: 8% 0 2% 0;
   margin-top: 5%;
@@ -56,4 +57,23 @@ h1 {
   .talking {
     width: 100%;
   }
+}
+
+.report-form {
+  width: 50%;
+  margin: auto;
+  margin-top: 60px;
+}
+
+#report {
+  padding: 10px 10px 400px 10px;
+}
+
+#report-submit {
+  width: 30%;
+  margin: auto;
+}
+
+input {
+  padding-top: 0;
 }
