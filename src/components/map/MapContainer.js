@@ -1,9 +1,10 @@
-// https://www.digitalocean.com/community/tutorials/how-to-integrate-the-google-maps-api-into-react-applications
+// Got a lot of the starting material for this from
+// https://www.digitalocean.com/community/tutorials
+// /how-to-integrate-the-google-maps-api-into-react-applications
 import React, { Component } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./map.css"; // minor styling here
 import Map from "./map"; // centers map @ curr loc
-import { ListoMarkers } from "./playMarkerData";
 import axios from "axios";
 
 export class MapContainer extends Component {
