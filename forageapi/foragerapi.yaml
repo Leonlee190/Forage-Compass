@@ -38,6 +38,68 @@ paths:
         200:
           description: Successfull operation
           content: {}
+  /locations:
+    get:
+      tags:
+        - location
+      summary: Get all known Forager-Compass locations reported by users
+      description: >-
+        Returns all location information, as a JSON object containing location name, latitude, longitude and type of item (variety) discovered
+
+        For valid responses, varietal should match one of the varieties supported
+        See: `/categories` for more information
+      operationId: getLocations
+      parameters:
+        - name: variety
+          in: query
+          description: Variety of locations to filter to, leave blank for all known
+          required: false
+          schema:
+            type: string
+            format: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/locations"
+        "406":
+          description: Invalid variety specified
+          content: {}
+
+components:
+  schemas:
+    locations:
+      required:
+        - latitude
+        - longitude
+        - variety
+        - name
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          uniqueItems: true
+          example: 605a6421d763780935d80eb1
+          readonly: true
+        name:
+          type: string
+          example: Bob's secret berry bush
+        latitude:
+          type: number
+          format: float
+          example: 145.535838
+        longitude:
+          type: number
+          format: float
+          example: -122.727242
+        variety:
+          type: string
+          format: string
+          example: Marionberry
+
   securitySchemes:
     api_key:
       type: apiKey
