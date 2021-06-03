@@ -122,7 +122,7 @@ router.delete("/", async (req, res, next) => {
         res.status(200);
         res.send("Location deleted");
       } else {
-        res.status(406);
+        res.status(404);
         res.send(`Location not found in database`);
       }
     })

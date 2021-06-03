@@ -147,6 +147,28 @@ paths:
           description: Location Updated
         "406":
           description: Invalid location information provided
+    delete:
+      tags:
+        - location
+      summary: Deletes an existing location
+      description: >-
+        Deletes the location specified by the `name` parameter
+      operationId: deleteLocation
+      parameters:
+        - name: name
+          in: query
+          description: Name of an existing location that will be deleted
+          required: true
+          schema:
+            type: string
+            format: string
+            example: Bob's super secret berry bush
+      responses:
+        "200":
+          description: Location Deleted
+        "404":
+          description: Location was not found
+
 components:
   schemas:
     locations:
