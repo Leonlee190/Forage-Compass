@@ -9,7 +9,6 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const debug = require("debug")("forageapi:server");
 const logger = require("morgan");
-const indexRouter = require("./routes/index");
 const locationsRouter = require("./routes/locations");
 const categoriesRouter = require("./routes/categories");
 const swaggerUI = require("swagger-ui-express");
@@ -29,7 +28,6 @@ const http = require("http");
 const server = http.createServer(app);
 
 const { MongoClient } = require("mongodb");
-const { ppid } = require("process");
 const dbConnectionURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@cluster0.5up0o.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 let dbForager;
 

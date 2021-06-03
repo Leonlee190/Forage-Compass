@@ -2,14 +2,11 @@ openapi: 3.0.1
 info:
   title: Forager-Compass API
   description: >-
-    This server, and the related REST API's, are used to faciliate playing the Pax Pamir boardgame remotely.  Client applications wishing to use this API, would only need to worry about the view or presentation aspect of actual gameplay.
-
-
-    All state information is retained by the server, including games in progress, player base, rule enforcement, game replay and undo operations.
+    This server, and the related REST API's, are used to faciliate the retention of discovered items while foraging for food.
 
 
 
-    You can find out more about the actual board game directly from the manafuacturer at  [Wehrlegig Games](http://wehrlegig.com)
+    In particular, this server provides a small set of REST API's that are used by the Forage-Compass application itself, but can also be used by third party applications.
 
   contact:
     email: seung2@pdx.edu, camilo3@pdx.edu, mwignall@pdx.edu
@@ -19,18 +16,18 @@ info:
   version: 1.0.0
 
 servers:
-  - url: "https://foragecompass.herokuapp.com/"
+  - url: "https://foragecompass.herokuapp.com"
   - url: "http://localhost:3001"
 tags:
-  - name: category
+  - name: categories
     description: Information pertaining to the the types of items tracked by Forager-Compass
-  - name: location
+  - name: locations
     description: Information stored for discovered locations of Forage-Compass items
 paths:
   /categories:
     get:
       tags:
-        - category
+        - categories
       summary: Get all Forager-Compass supported varieties
       description: Returns all varietiel information, as a JSON object containing Categories and Varities within each
       operationId: getCategories
@@ -41,7 +38,7 @@ paths:
   /locations:
     get:
       tags:
-        - location
+        - locations
       summary: Get all known Forager-Compass locations reported by users
       description: >-
         Returns all location information, as a JSON object containing location name, latitude, longitude and type of item (variety) discovered
@@ -69,7 +66,7 @@ paths:
           content: {}
     post:
       tags:
-        - location
+        - locations
       summary: Adds a new location to the list of known locations
       description: >-
         Adds the location specified in the body
@@ -103,20 +100,11 @@ paths:
           description: Invalid location information provided
     put:
       tags:
-        - location
+        - locations
       summary: Udates an existing location
       description: >-
-        Updates the location specified by the `name` parameter, replacing the conents with the new values
+        Updates the location specified by the `name` parameter, replacing the contents with the new values specified in the body
       operationId: updateLocation
-      parameters:
-        - name: name
-          in: query
-          description: Name of an existing location that will be updated
-          required: true
-          schema:
-            type: string
-            format: string
-            example: Bob's secret berry bush
       requestBody:
         required: true
         description: >-
@@ -141,7 +129,7 @@ paths:
                 variety:
                   type: string
                   format: string
-                  example: Marionberry
+                  example: Apple
       responses:
         "200":
           description: Location Updated
@@ -149,7 +137,7 @@ paths:
           description: Invalid location information provided
     delete:
       tags:
-        - location
+        - locations
       summary: Deletes an existing location
       description: >-
         Deletes the location specified by the `name` parameter
