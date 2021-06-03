@@ -63,12 +63,23 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   let varietyFilter = req.query.variety ? { variety: req.query.variety } : {};
 
-  await req.app.locals.colLocation
-    .find(varietyFilter)
-    .toArray()
-    .then((results) => {
-      res.status(200).json(results);
-    });
+  // First need to validate that the requested entry is valid
+  let variety = await validateLocation(
+    varietyFilter,
+    req.app.locals.colCategory
+  );
+
+  res.status(406); // Assume this will encounter an error
+  if (variety.valid || Object.keys(varietyFilter).length === 0) {
+    await req.app.locals.colLocation
+      .find(varietyFilter)
+      .toArray()
+      .then((results) => {
+        res.status(200).json(results);
+      });
+  } else {
+    res.send(`Invalid ${variety.reason}`);
+  }
 });
 
 ///////////////////////////////////////
@@ -111,7 +122,7 @@ router.delete("/", async (req, res, next) => {
         res.status(200);
         res.send("Location deleted");
       } else {
-        res.status(406);
+        res.status(404);
         res.send(`Location not found in database`);
       }
     })
