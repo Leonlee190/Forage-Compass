@@ -61,3 +61,20 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #d0f30c;
 }
+
+@media (max-width: 414px) {
+  .modal {
+    width: 100%;
+  }
+  .modal_content {
+    left: 5%;
+    width: 90%;
+    margin: auto;
+    padding: 15px;
+    z-index: 10;
+  }
+  .modal-form {
+    padding: 0;
+    width: 100%;
+  }
+}
