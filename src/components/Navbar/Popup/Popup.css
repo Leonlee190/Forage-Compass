@@ -71,6 +71,7 @@ input[type="submit"]:hover {
     width: 90%;
     margin: auto;
     padding: 15px;
+    /* don't think this does anything but was to try to fix the arrows in add item mobile */
     z-index: 10;
   }
   .modal-form {

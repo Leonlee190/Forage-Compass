@@ -24,8 +24,9 @@ function LeftBar(props) {
   return (
     <>
       <div>
-        <Link to="#" className="add-button" onClick={togglePopup}>
+        <Link to="#" className="add-button nav-text-left" onClick={togglePopup}>
           <biIcons.BiLocationPlus />
+          <span className="quick-fix">Add an Item</span>
         </Link>
         {/* This is where we get the prop to pass the data from. */}
         {isOpen && <Popup handleClose={togglePopup} pushItUp={pushItUp} />}
