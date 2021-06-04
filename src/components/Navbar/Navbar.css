@@ -1,6 +1,6 @@
 .navbar {
   background-color: #012b12;
-  height: 40px;
+  height: 65px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,4 +108,13 @@
 
 span {
   margin-left: 16px;
+}
+
+@media (max-width: 414px) {
+  .navbar {
+    height: 85px;
+  }
+  .menu-bars-left {
+    height: 70%;
+  }
 }
