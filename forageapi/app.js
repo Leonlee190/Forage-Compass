@@ -11,6 +11,7 @@ const debug = require("debug")("forageapi:server");
 const logger = require("morgan");
 const locationsRouter = require("./routes/locations");
 const categoriesRouter = require("./routes/categories");
+const requestsRouter = require("./routes/support");
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
 const swaggerDocument = YAML.load(path.resolve(__dirname, "foragerapi.yaml"));
@@ -114,6 +115,7 @@ app.use(express.static(path.resolve(__dirname, "../build")));
 
 app.use("/locations", locationsRouter);
 app.use("/categories", categoriesRouter);
+app.use("/support", requestsRouter);
 app.use(
   "/api-docs",
   swaggerUI.serve,
@@ -157,6 +159,7 @@ MongoClient.connect(dbConnectionURI, {
     // Went with option 3, mainly because it felt that was exaclty why they added that to express
     app.locals.colLocation = dbForager.collection("location");
     app.locals.colCategory = dbForager.collection("category");
+    app.locals.colRequests = dbForager.collection("requests");
 
     server.listen(PORT);
     server.on("error", onError);

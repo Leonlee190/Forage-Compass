@@ -2,32 +2,20 @@ var express = require("express");
 const debug = require("debug")("forageapi:server");
 var router = express.Router();
 
+const validCategories = ["Feature", "Bug", "Data"];
 /**
  * Validate that a location "document" for the MongoDB is/contains valid information
  */
-async function validateLocation(location, categories) {
+function validateRequest(location, userRequest) {
   let retValue = { valid: false };
-  let validVarieties = [];
 
-  // First, we need to get a simple array of all the valie Varieties within each
-  // of the categories.  This array will server as the master list of varieties
-  // that can be added to the database.
-  await categories
-    .find({}, { projection: { _id: 0, variety: 1 } })
-    .toArray()
-    .then((results) => {
-      results.forEach((category) => {
-        validVarieties = validVarieties.concat(category.variety);
-      });
-    });
-
-  // Now we simply need to ensure the variety property of the location object passed
+  // Now we simply need to ensure the variety property of the locaiton object passed
   // in, is one of the valid varieties.
-  if (validVarieties.includes(location.variety)) {
+  if (userRequest.type in validCategories) {
     retValue.valid = true;
   } else {
     // Provide some information back that indicates why it is not valid
-    retValue.reason = `Variety specified [${location.variety}], must be one of: ${validVarieties}`;
+    retValue.reason = `Category specified [${userRequest.category}], must be one of: ${validCategories}`;
   }
 
   return retValue;
@@ -38,7 +26,7 @@ async function validateLocation(location, categories) {
 //
 router.post("/", async (req, res, next) => {
   // First need to validate that the requested entry is valid
-  let location = await validateLocation(req.body, req.app.locals.colCategory);
+  let location = validateRequest(req.body, req.app.locals.colCategory);
 
   res.status(406); // Assume this will encounter an error
   if (location.valid) {
@@ -61,24 +49,20 @@ router.post("/", async (req, res, next) => {
 // CRUD - READ from persistent storage
 //
 router.get("/", async (req, res, next) => {
-  let varietyFilter = req.query.variety ? { variety: req.query.variety } : {};
-
-  // First need to validate that the requested entry is valid
-  let variety = await validateLocation(
-    varietyFilter,
-    req.app.locals.colCategory
-  );
+  let { classificationFilter } = req.query.classification || {};
 
   res.status(406); // Assume this will encounter an error
-  if (variety.valid || Object.keys(varietyFilter).length === 0) {
-    await req.app.locals.colLocation
-      .find(varietyFilter)
+  if (classificationFilter in validCategories) {
+    await req.app.locals.colRequests
+      .find(classificationFilter)
       .toArray()
       .then((results) => {
         res.status(200).json(results);
       });
   } else {
-    res.send(`Invalid ${variety.reason}`);
+    res.send(
+      `Invalid classificaiton requested, should be one of: [${validCategories}]`
+    );
   }
 });
 
