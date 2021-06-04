@@ -1,9 +1,10 @@
-// https://www.digitalocean.com/community/tutorials/how-to-integrate-the-google-maps-api-into-react-applications
+// Got a lot of the starting material for this from
+// https://www.digitalocean.com/community/tutorials
+// /how-to-integrate-the-google-maps-api-into-react-applications
 import React, { Component } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import "./map.css"; // minor styling here
 import Map from "./map"; // centers map @ curr loc
-import { ListoMarkers } from "./playMarkerData";
 import axios from "axios";
 
 export class MapContainer extends Component {
@@ -41,7 +42,7 @@ export class MapContainer extends Component {
     ) {
       console.log("Re-requesting data from server");
       axios
-        .get("http://localhost:3001/locations")
+        .get("/locations")
         .then((response) => {
           // console.log(response.data);
           const results = response.data.map((marker) => {
@@ -106,7 +107,7 @@ export class MapContainer extends Component {
     // NOTE!!!  THIS IS WHERE WE WILL MAKE REQUEST TO SERVER, I THINK...
     // probs need some check make sure server is up
     axios
-      .get("http://localhost:3001/locations")
+      .get("/locations")
       .then((response) => {
         // console.log(response.data);
         const results = response.data.map((marker) => {

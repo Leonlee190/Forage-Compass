@@ -31,6 +31,7 @@ export class Map extends React.Component {
     };
   }
 
+  // checks for updates to connections, location
   componentDidUpdate(prevProps, prevState) {
     // for in case of network issues...
     if (prevProps.google !== this.props.google) {
@@ -40,20 +41,9 @@ export class Map extends React.Component {
     if (prevState.currentLocation !== this.state.currentLocation) {
       this.recenterMap();
     }
-
-    // these were always null, never got updated...
-    // console.log("MapCon prevProps:", prevProps.parentData);
-    // console.log("MapCon Curr Props:", this.props.parentData);
-    // similarly, this function never get's called
-    // if (
-    //   this.props.parentData &&
-    //   this.props.parentData !== prevProps.parentData
-    // ) {
-    //   console.log("Component Update was called");
-    //   this.forceUpdate();
-    // }
   }
 
+  // gets current location and recenters map there
   recenterMap() {
     const map = this.map;
     const current = this.state.currentLocation;
@@ -63,6 +53,23 @@ export class Map extends React.Component {
 
     if (map) {
       let center = new gmaps.LatLng(current.lat, current.lng);
+      ////////////////////////////
+      // this part puts a marker down when recentering around location
+      const infoWindow = new gmaps.InfoWindow({
+        content: "<h4>Superstar!</h4><p>that is what you are...</p>",
+      });
+      const superstar = new gmaps.Marker({
+        icon: "/icons/star.png",
+        position: current,
+        title: "Superstar!",
+      });
+      superstar.addListener("click", () => {
+        infoWindow.close();
+        infoWindow.open(this.map, superstar);
+      });
+      superstar.setMap(map);
+      //////////////////////////////
+      // pans to center of map
       map.panTo(center);
     }
   }
@@ -115,25 +122,39 @@ export class Map extends React.Component {
       // maps.Map() is constructor that makes the map
       this.map = new gmaps.Map(node, mapConfig);
 
+      // this is just to maintain the ux from the previous change
+      // below to 'rightclick' from 'click'
+      // some implementation is triggered from last click being changed. :/
       this.map.addListener("click", (evt) => {
+        this.setState({ lastClick: evt.latLng.toJSON() });
+      });
+
+      // this will eventually be used to add a users specific location
+      // on the map when they right click or long press map.
+      this.map.addListener("rightclick", (evt) => {
         // Was trying to prevent the clicks except when wanted.
-        // if (this.state.addMarker) {
+        const position = evt.latLng.toJSON();
         let contentStyling =
-          "<div>" +
-          '<img src="/icons/raspberry-1-32.png" alt="" />' +
-          "<h4>{this.state.selectedPlace.name}</h4>" +
-          "<p>In Season: {this.state.selectedPlace.inSeason}</p>" +
-          "</div>";
+          "<h4>Temp Test Marker from right click</h4>" +
+          "<p>lat: " +
+          position.lat +
+          "</p>" +
+          "<p>long: " +
+          position.lng +
+          "</p>";
+
+        // this triggers something in the map container I believe
         this.setState({ lastClick: evt.latLng.toJSON() });
         const infoWindow = new gmaps.InfoWindow({
           content: contentStyling,
         });
         const marker = new gmaps.Marker({
           icon: "/icons/oyster.png",
-          position: this.state.lastClick,
+          position: evt.latLng,
           title: "new marker!",
         });
         marker.addListener("click", () => {
+          infoWindow.close();
           infoWindow.open(this.map, marker);
         });
         marker.setMap(this.map);

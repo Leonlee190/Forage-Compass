@@ -30,7 +30,7 @@ const Popup = (props) => {
 
     // where we make the post request to server.
     axios
-      .post("http://localhost:3001/locations", dataPackage)
+      .post("/locations", dataPackage)
       .then((response) => {
         console.log("Data post response:/n", response);
       })
