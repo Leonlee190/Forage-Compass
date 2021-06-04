@@ -1,6 +1,6 @@
 .navbar {
   background-color: #012b12;
-  height: 65px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -111,10 +111,8 @@ span {
 }
 
 @media (max-width: 414px) {
+  /* makes the nav bar a little larger */
   .navbar {
-    height: 85px;
-  }
-  .menu-bars-left {
-    height: 70%;
+    height: 60px;
   }
 }
