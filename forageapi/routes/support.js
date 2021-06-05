@@ -11,7 +11,7 @@ function validateRequest(supportRequest) {
 
   // Now we simply need to ensure the variety property of the locaiton object passed
   // in, is one of the valid varieties.
-  if (validClassifications.includes(supportRequest.classification)) {
+  if (validClassifications.includes(supportRequest.category)) {
     if (supportRequest.message) {
       retValue.valid = true;
     } else {
