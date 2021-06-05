@@ -46,7 +46,8 @@ select {
   font-size: 18px;
 }
 
-input[type="submit"] {
+input[type="submit"],
+button[type="button"] {
   width: 100%;
   background-color: #85b307;
   color: white;
@@ -58,7 +59,8 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+button[type="button"]:hover {
   background-color: #d0f30c;
 }
 
