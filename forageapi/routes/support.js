@@ -75,7 +75,8 @@ router.post("/", async (req, res, next) => {
       .insertOne(req.body)
       .then((result) => {
         res.status(200);
-        res.send(`Support item created`);
+        debug(`Support item ${req.body._id} was created`);
+        res.send(`Support item ${req.body._id} was created `);
       })
       .catch((error) => {
         res.send(error.message);
