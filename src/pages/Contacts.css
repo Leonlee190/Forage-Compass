@@ -4,11 +4,12 @@ h3 {
   text-align: center;
   color: #012b12;
   font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
+  margin: 10px auto;
 }
 
 h1 {
   padding: 2px 0;
-  margin-top: 0%;
+  margin-top: 35px;
 }
 
 .descrip {
@@ -64,7 +65,7 @@ h1 {
 .report-form {
   /* width: 50%; */
   margin: auto;
-  margin-top: 60px;
+  margin-top: 10px;
   padding: 15px;
   max-width: 630px;
 }
@@ -74,15 +75,15 @@ h1 {
   display: block;
   padding: 10px 10px 10px 10px;
   margin: 5px auto;
-  height: 200px;
+  height: 180px;
   width: 100%;
   max-width: 600px;
 }
 
 #request-submit,
 #request-cancel {
-  width: 50%;
-  margin: 10px 25% 0 25%;
+  width: 40%;
+  margin: 10px 5% 0 5%;
   max-width: 300px;
 }
 
