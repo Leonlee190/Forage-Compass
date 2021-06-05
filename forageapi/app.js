@@ -11,6 +11,7 @@ const debug = require("debug")("forageapi:server");
 const logger = require("morgan");
 const locationsRouter = require("./routes/locations");
 const categoriesRouter = require("./routes/categories");
+const requestsRouter = require("./routes/support");
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
 const swaggerDocument = YAML.load(path.resolve(__dirname, "foragerapi.yaml"));
@@ -101,10 +102,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Enable CORS suport for localhost only
-var corsOptions = {
-  origin: "http://localhost",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
 app.use(cors());
 
 //app.use("/", indexRouter);
@@ -114,6 +111,7 @@ app.use(express.static(path.resolve(__dirname, "../build")));
 
 app.use("/locations", locationsRouter);
 app.use("/categories", categoriesRouter);
+app.use("/support", requestsRouter);
 app.use(
   "/api-docs",
   swaggerUI.serve,
@@ -155,8 +153,10 @@ MongoClient.connect(dbConnectionURI, {
     // 2.  create a third module that has db utilites in there to return it's this pointer
     // 3.  leverage express's way of passing data between routes, app.local
     // Went with option 3, mainly because it felt that was exaclty why they added that to express
+    app.locals.dbConnection = dbForager;
     app.locals.colLocation = dbForager.collection("location");
     app.locals.colCategory = dbForager.collection("category");
+    app.locals.colRequests = dbForager.collection("requests");
 
     server.listen(PORT);
     server.on("error", onError);

@@ -21,7 +21,7 @@ async function validateLocation(location, categories) {
       });
     });
 
-  // Now we simply need to ensure the variety property of the locaiton object passed
+  // Now we simply need to ensure the variety property of the location object passed
   // in, is one of the valid varieties.
   if (validVarieties.includes(location.variety)) {
     retValue.valid = true;
