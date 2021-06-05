@@ -64,7 +64,9 @@ router.post("/", async (req, res, next) => {
       .insertOne(req.body)
       .then((result) => {
         res.status(200);
-        res.send(`Support item created`);
+        // res.send(`Support item created`);
+        // added this in to send person back to home page
+        res.redirect("/");
       })
       .catch((error) => {
         res.send(error.message);
