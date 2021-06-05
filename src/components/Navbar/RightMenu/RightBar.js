@@ -9,15 +9,9 @@ export const RightBar = [
     cName: "nav-text-right",
   },
   {
-    title: "Request to put in new item",
+    title: "Request and Reports",
     path: "/requests",
     icon: <mdIcons.MdPlaylistAdd />,
-    cName: "nav-text-right",
-  },
-  {
-    title: "Reports",
-    path: "/reports",
-    icon: <mdIcons.MdReport />,
     cName: "nav-text-right",
   },
   {
