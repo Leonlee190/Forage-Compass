@@ -23,6 +23,8 @@ tags:
     description: Information pertaining to the the types of items tracked by Forager-Compass
   - name: locations
     description: Information stored for discovered locations of Forage-Compass items
+  - name: support
+    description: Information that corresponds to requested Features, Bugs, or Data Fixes
 paths:
   /categories:
     get:
@@ -156,6 +158,85 @@ paths:
           description: Location Deleted
         "404":
           description: Location was not found
+  /support:
+    get:
+      tags:
+        - support
+      summary: Get all known Forager-Compass support related items
+      description: >-
+        Returns all support related items (Features, Bugs, Data), as a JSON object containing category and message
+      operationId: getSupportItems
+      parameters:
+        - name: category
+          in: query
+          description: Category of support items to filter on.  Leave blank for no filter.
+          required: false
+          schema:
+            $ref: "#/components/schemas/Category"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/supportItems"
+        "406":
+          description: Invalid category specified
+          content: {}
+    post:
+      tags:
+        - support
+      summary: Adds a new support item
+      description: >-
+        Adds a new support item to the list of tracked issues
+      operationId: addSupport
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                  enum: [Feature, Bug, Data']
+                message:
+                  type: string
+                  format: string
+                  example: Please include the feature that I havn't thought of yet
+      responses:
+        "200":
+          description: Support item added
+        "406":
+          description: |
+            JSON payload was unacceptable:
+
+            Reponse text could be one of the following hints as to why:
+
+            *Category specified must be one of: Feature,Bug,Data*
+
+            *Message is not present*
+  /support/{supportID}:
+    delete:
+      tags:
+        - support
+      summary: Deletes an existing support item
+      description: >-
+        Deletes the request item number
+      operationId: deleteSupport
+      parameters:
+        - name: supportID
+          in: path
+          description: Support number (_id) corresponding to the item to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 8675309
+      responses:
+        "200":
+          description: Support item deleted
+        "404":
+          description: Support item not found
 
 components:
   schemas:
@@ -188,6 +269,28 @@ components:
           type: string
           format: string
           example: Marionberry
+    Category:
+      type: string
+      enum: [Feature, Bug, Data]
+    supportItems:
+      required:
+        - category
+        - message
+      type: object
+      properties:
+        _id:
+          type: string
+          format: Int32
+          uniqueItems: true
+          example: 1234
+          readonly: true
+        category:
+          type: string
+          example: Feature
+        message:
+          type: string
+          format: string
+          example: Please add feature for determining winning lottery numbers
 
   securitySchemes:
     api_key:
