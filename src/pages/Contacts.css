@@ -69,7 +69,7 @@ h1 {
   max-width: 630px;
 }
 
-#report {
+#message {
   /* changed bottom padding, added static height */
   display: block;
   padding: 10px 10px 10px 10px;
@@ -79,7 +79,8 @@ h1 {
   max-width: 600px;
 }
 
-#report-submit {
+#request-submit,
+#request-cancel {
   width: 50%;
   margin: 10px 25% 0 25%;
   max-width: 300px;

@@ -2,16 +2,18 @@ var express = require("express");
 const debug = require("debug")("forageapi:server");
 var router = express.Router();
 
-const validClassifications = ["Feature", "Bug", "Data"];
+const validCategories = ["Feature", "Bug", "Data"];
 /**
  * Validate that a location "document" for the MongoDB is/contains valid information
  */
 function validateRequest(supportRequest) {
   let retValue = { valid: false };
+  const { category } = supportRequest || {};
 
-  // Now we simply need to ensure the variety property of the locaiton object passed
-  // in, is one of the valid varieties.
-  if (validClassifications.includes(supportRequest.category)) {
+  // Ensure the category field is mixed case before we do any comparision
+  let requestedCategory = category ? toMixedCase(category) : "";
+
+  if (validCategories.includes(requestedCategory)) {
     if (supportRequest.message) {
       retValue.valid = true;
     } else {
@@ -19,10 +21,18 @@ function validateRequest(supportRequest) {
     }
   } else {
     // Provide some information back that indicates why it is not valid
-    retValue.reason = `Category specified [${supportRequest.category}], must be one of: ${validClassifications}`;
+    retValue.reason = `Category specified [${category}], must be one of: ${validCategories}`;
   }
 
   return retValue;
+}
+
+function toMixedCase(srcString) {
+  if (srcString) {
+    return srcString.charAt(0).toUpperCase() + srcString.slice(1).toLowerCase();
+  } else {
+    return undefined;
+  }
 }
 
 async function getNextSequenceValue(db, sequenceName) {
@@ -49,12 +59,13 @@ async function getNextSequenceValue(db, sequenceName) {
 //
 router.post("/", async (req, res, next) => {
   // First need to validate that the requested entry is valid
-  const { classification } = req.body || {};
+  //const { category } = req.body || {};
+
   const validationResult = validateRequest(req.body);
 
   res.status(406); // Assume this will encounter an error
   if (validationResult.valid) {
-    debug(`Adding support item for [${classification}]`);
+    debug(`Adding support item for [${req.body.category}]`);
     req.body._id = await getNextSequenceValue(
       req.app.locals.dbConnection,
       "requestID"
@@ -64,17 +75,13 @@ router.post("/", async (req, res, next) => {
       .insertOne(req.body)
       .then((result) => {
         res.status(200);
-        // res.send(`Support item created`);
-        // added this in to send person back to home page
-        res.redirect("/");
+        res.send(`Support item created`);
       })
       .catch((error) => {
         res.send(error.message);
       });
   } else {
-    res.send(
-      `Invalid classification information provided (${validationResult.reason})`
-    );
+    res.send(validationResult.reason);
   }
 });
 
@@ -82,14 +89,27 @@ router.post("/", async (req, res, next) => {
 // CRUD - READ from persistent storage
 //
 router.get("/", async (req, res, next) => {
-  const { classification } = req.query || {};
-  const requestFilter = classification
-    ? { classification: classification }
+  //let { category } = req.query || {};
+  let requestedCategory = Array.isArray(req.query.category)
+    ? req.query.category[0]
+    : req.query.category;
+
+  // Ensure the requested category is in the proper mixed case. Doing this becae the URL coming in
+  // could be manually typed and we want to ensure it mirrors how the data is stored in mongoDB
+  if (requestedCategory) {
+    requestedCategory =
+      requestedCategory.charAt(0).toUpperCase() +
+      requestedCategory.slice(1).toLowerCase();
+  }
+
+  // Construct an appropriate query filter based on the presence of a requested category or not
+  const requestFilter = requestedCategory
+    ? { category: requestedCategory }
     : {};
 
   res.status(406); // Assume this will encounter an error
   if (
-    validClassifications.includes(classification) ||
+    validCategories.includes(requestedCategory) ||
     Object.keys(req.query).length === 0
   ) {
     await req.app.locals.colRequests
@@ -100,7 +120,7 @@ router.get("/", async (req, res, next) => {
       });
   } else {
     res.send(
-      `Invalid classificaiton requested, should be one of: [${validClassifications}]`
+      `Invalid category requested [${requestedCategory}], should be one of: [${validCategories}]`
     );
   }
 });
