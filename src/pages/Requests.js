@@ -1,13 +1,47 @@
-// import { Redirect } from "react-router";
 import "./Contacts.css";
-// import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Requests() {
   const handleSubmit = (event) => {
-    // event.preventDefault(); // we want default.
-    // default is to actually post, but then returns page just with text: Support item created
-    alert("Thank you! We'll look into it.");
-    // can't figure out how to a. redirect, or b. respond to different post responses.
+    // We are handling the activity ourself, so we don't want default behavior
+    event.preventDefault();
+
+    // Prepare a payload for the sending to the REST API server:
+    const dataPackage = {
+      category: document.getElementById("category").value,
+      message: document.getElementById("message").value,
+    };
+
+    // Since we're handling this ourselves, we need to make the call to the server vs. relying simply
+    // on the path redirect the normal behavior would perform
+    axios
+      .post("/support", dataPackage)
+      .then((response) => {
+        alert("Thank you! We'll look into it");
+        // Since we were successfull, we'll redirect back to the main map page
+        window.location.replace("/");
+      })
+      .catch((error) => {
+        if (
+          error.response.status === 406 &&
+          error.response.data.includes("Message")
+        ) {
+          alert("Oops! Looks like there was no request entered.");
+        } else {
+          alert(
+            "Oops! An error occurred during submission.  Please try again later."
+          );
+          console.log(
+            `Request submission error:  ${error.response.status}: ${error.response.data}`
+          );
+        }
+      });
+  };
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    window.location = "/";
+    return false;
   };
 
   return (
@@ -29,11 +63,12 @@ function Requests() {
           <option value="Bug">Report a Bug</option>
           <option value="Data">Data Changes</option>
         </select>
-        <label htmlFor="report">Request: </label>
-        <textarea id="report" name="message"></textarea>
-        {/* <Link to={"/"}> */}
-        <input type="submit" id="report-submit"></input>
-        {/* </Link> */}
+        <label htmlFor="message">Request: </label>
+        <textarea id="message" name="message"></textarea>
+        <input type="submit" id="request-submit"></input>
+        <button type="button" id="request-cancel" onClick={handleCancel}>
+          Cancel
+        </button>
       </form>
     </div>
   );

@@ -80,6 +80,13 @@ function App() {
             <Route path="/contacts">
               <Contacts />
             </Route>
+            <Route
+              path="/apidocs"
+              component={() => {
+                window.location.href = "/api-docs";
+                return null;
+              }}
+            ></Route>
             <Route path="/">
               {/* the actual map component, centers around your location. */}
               <MapContainer parentData={props} />
