@@ -1,12 +1,13 @@
 import "./Contacts.css";
 import * as imIcons from "react-icons/im";
 
+// current build responsive up until about
+// height less than 600.. then need to redesign css, or build more.
 function Contacts() {
   return (
     <div className="wholePage">
       <h1>Contacts</h1>
       <h3>A Portland State University Student Production</h3>
-      <br></br>
       <p className="descrip">
         This is a joint school project by the following individuals:
       </p>
