@@ -4,7 +4,7 @@ h3 {
   text-align: center;
   color: #012b12;
   font-family: "Franklin Gothic Medium", "Arial Narrow", "Arial", "sans-serif";
-  margin: 10px auto;
+  margin: 8px auto;
 }
 
 h1 {
@@ -31,7 +31,7 @@ h1 {
 }
 
 #cardHolder {
-  padding-top: 30px;
+  padding-top: 20px;
   width: 100%;
 
   display: flex;
@@ -40,7 +40,7 @@ h1 {
 }
 
 .card {
-  padding: 10px;
+  padding: 5px 10px;
   border: #012b12 solid 1px;
   border-radius: 3px;
   width: 200px;
@@ -54,12 +54,6 @@ h1 {
   margin: 0 auto;
   padding-top: 20px;
   text-align: center;
-}
-
-@media (max-width: 600px) {
-  .talking {
-    width: 100%;
-  }
 }
 
 .report-form {
@@ -101,4 +95,10 @@ input {
 
 .icon-position {
   left: 50%;
+}
+
+@media (max-width: 600px) {
+  .talking {
+    width: 100%;
+  }
 }

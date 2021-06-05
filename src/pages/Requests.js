@@ -65,7 +65,7 @@ function Requests() {
         </select>
         <label htmlFor="message">Request: </label>
         <textarea id="message" name="message"></textarea>
-        <input type="submit" id="request-submit"></input>
+        <input type="submit" id="request-submit" value="Submit"></input>
         <button type="button" id="request-cancel" onClick={handleCancel}>
           Cancel
         </button>
