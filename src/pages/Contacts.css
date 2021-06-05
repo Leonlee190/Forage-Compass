@@ -92,3 +92,11 @@ input {
 #category {
   display: inline-block;
 }
+
+.icon-git {
+  cursor: pointer;
+}
+
+.icon-position {
+  left: 50%;
+}

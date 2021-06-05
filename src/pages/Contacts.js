@@ -1,4 +1,5 @@
 import "./Contacts.css";
+import * as imIcons from "react-icons/im";
 
 function Contacts() {
   return (
@@ -31,6 +32,18 @@ function Contacts() {
         Please let us know if you tried out our web application and how you
         liked it, or if you have any questions, comments, concerns, etc.
         Hopefully we can continue to work on, update, and improve over time.
+      </p>
+      <p className="talking">
+        <imIcons.ImGithub
+          className="icon-git"
+          size={30}
+          onClick={() =>
+            window.open(
+              "https://github.com/Leonlee190/Forage-Compass",
+              "_blank"
+            )
+          }
+        />
       </p>
     </div>
   );

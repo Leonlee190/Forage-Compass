@@ -77,9 +77,6 @@ function App() {
             <Route path="/requests">
               <Requests />
             </Route>
-            <Route path="/reports">
-              <Reports />
-            </Route>
             <Route path="/contacts">
               <Contacts />
             </Route>
